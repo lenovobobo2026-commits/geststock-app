@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e40af">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="GestStock">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1E40AF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GestStock">
+<title>GestStock — Gestion Boutique Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-900: #1e3a8a;
+  --blue-800: #1e40af;
+  --blue-700: #1d4ed8;
+  --blue-600: #2563eb;
+  --blue-100: #dbeafe;
+  --blue-50:  #eff6ff;
+  --amber:    #f59e0b;
+  --amber-lt: #fef3c7;
+  --green:    #16a34a;
+  --green-lt: #dcfce7;
+  --red:      #dc2626;
+  --red-lt:   #fee2e2;
+  --gray-900: #0f172a;
+  --gray-700: #334155;
+  --gray-500: #64748b;
+  --gray-300: #cbd5e1;
+  --gray-100: #f1f5f9;
+  --gray-50:  #f8fafc;
+  --white:    #ffffff;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.08);
+  --radius:   10px;
+  --header-h: 58px;
+  --subheader-h: 48px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--gray-50);color:var(--gray-900);font-size:14px;line-height:1.5}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ─── HEADER ─── */
+.header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);
+  background:var(--blue-800);z-index:200;
+  display:flex;align-items:center;padding:0 20px;gap:16px;
+  box-shadow:0 2px 8px rgba(30,64,175,.3);
+}
+.header-logo{display:flex;align-items:center;gap:10px;margin-right:8px}
+.header-logo-icon{
+  width:34px;height:34px;background:rgba(255,255,255,.15);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.header-logo-text{font-size:17px;font-weight:800;color:var(--white);letter-spacing:-.3px}
+.header-logo-sub{font-size:10px;color:rgba(255,255,255,.55);font-weight:400;display:block;margin-top:-2px}
+
+.header-nav{display:flex;align-items:center;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+.header-nav::-webkit-scrollbar{display:none}
+.nav-btn{
+  display:flex;align-items:center;gap:6px;padding:7px 12px;
+  border-radius:7px;border:none;background:transparent;
+  color:rgba(255,255,255,.7);font-size:13px;font-weight:500;
+  white-space:nowrap;transition:.15s;position:relative;
+}
+.nav-btn:hover{background:rgba(255,255,255,.1);color:var(--white)}
+.nav-btn.active{background:rgba(255,255,255,.18);color:var(--white);font-weight:600}
+.nav-btn .nav-badge{
+  position:absolute;top:4px;right:4px;
+  background:var(--red);color:#fff;
+  font-size:9px;font-weight:700;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.header-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.lang-toggle{
+  display:flex;background:rgba(255,255,255,.1);border-radius:6px;padding:2px;
+}
+.lang-btn{
+  padding:4px 9px;border-radius:4px;border:none;background:transparent;
+  color:rgba(255,255,255,.65);font-size:11px;font-weight:600;transition:.15s;
+}
+.lang-btn.active{background:var(--white);color:var(--blue-800)}
+.user-chip{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.12);border-radius:8px;
+  padding:5px 10px 5px 6px;cursor:pointer;transition:.15s;border:none;
+}
+.user-chip:hover{background:rgba(255,255,255,.2)}
+.user-avatar{
+  width:26px;height:26px;border-radius:6px;
+  background:var(--amber);color:var(--white);
+  font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.user-name{font-size:12px;color:var(--white);font-weight:600}
+.user-role{font-size:10px;color:rgba(255,255,255,.5)}
+.header-menu-btn{display:none;background:none;border:none;color:#fff;font-size:20px;padding:4px}
+
+/* ─── SUBHEADER (page title + actions) ─── */
+.subheader{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--subheader-h);
+  background:var(--white);border-bottom:1px solid var(--gray-100);z-index:150;
+  display:flex;align-items:center;padding:0 20px;gap:12px;
+  box-shadow:var(--shadow-sm);
+}
+.subheader-title{font-size:15px;font-weight:700;color:var(--gray-900);flex:1}
+.subheader-sub{font-size:12px;color:var(--gray-500);font-weight:400;margin-left:6px}
+
+/* ─── CONTENT ─── */
+.content{
+  margin-top:calc(var(--header-h) + var(--subheader-h));
+  padding:20px;min-height:calc(100vh - var(--header-h) - var(--subheader-h));
+}
+.page{display:none}
+.page.active{display:block}
+
+/* ─── CARDS ─── */
+.card{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-100);box-shadow:var(--shadow-sm);padding:18px}
+.card-title{font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+
+/* ─── KPI GRID ─── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin-bottom:20px}
+.kpi{
+  background:var(--white);border-radius:var(--radius);
+  border:1px solid var(--gray-100);box-shadow:var(--shadow-sm);
+  padding:16px;position:relative;overflow:hidden;
+}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--kpi-color,var(--blue-600));
+}
+.kpi-label{font-size:11px;color:var(--gray-500);font-weight:500;margin-bottom:6px}
+.kpi-value{font-size:24px;font-weight:800;color:var(--gray-900);line-height:1}
+.kpi-sub{font-size:11px;color:var(--gray-500);margin-top:5px}
+.kpi-icon{position:absolute;right:14px;top:50%;transform:translateY(-40%);font-size:32px;opacity:.1}
+.kpi.blue{--kpi-color:var(--blue-600)}
+.kpi.green{--kpi-color:var(--green)}
+.kpi.amber{--kpi-color:var(--amber)}
+.kpi.red{--kpi-color:var(--red)}
+
+/* ─── DASH GRID ─── */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ─── TABLE ─── */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--gray-100)}
+table{width:100%;border-collapse:collapse;background:var(--white)}
+thead{background:var(--gray-50)}
+th{font-size:11px;font-weight:600;color:var(--gray-500);padding:10px 14px;text-align:left;border-bottom:1px solid var(--gray-100);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--gray-100);font-size:13px;color:var(--gray-700)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--blue-50)}
+
+/* ─── BADGE ─── */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge-blue{background:var(--blue-100);color:var(--blue-800)}
+.badge-green{background:var(--green-lt);color:var(--green)}
+.badge-amber{background:var(--amber-lt);color:#92400e}
+.badge-red{background:var(--red-lt);color:var(--red)}
+.badge-gray{background:var(--gray-100);color:var(--gray-500)}
+
+/* ─── ALERT ─── */
+.alert{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:8px;font-size:13px;margin-bottom:8px}
+.alert-amber{background:var(--amber-lt);border:1px solid #fcd34d;color:#78350f}
+.alert-red{background:var(--red-lt);border:1px solid #fca5a5;color:var(--red)}
+.alert-blue{background:var(--blue-50);border:1px solid var(--blue-100);color:var(--blue-800)}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;transition:.15s;white-space:nowrap}
+.btn-primary{background:var(--blue-600);color:#fff}
+.btn-primary:hover{background:var(--blue-700)}
+.btn-amber{background:var(--amber);color:#fff}
+.btn-amber:hover{background:#d97706}
+.btn-red{background:var(--red);color:#fff}
+.btn-ghost{background:transparent;color:var(--gray-700);border:1px solid var(--gray-300)}
+.btn-ghost:hover{background:var(--gray-100)}
+.btn-sm{padding:5px 12px;font-size:12px}
+.btn-icon{background:none;border:none;padding:5px 7px;border-radius:6px;font-size:15px;transition:.15s}
+.btn-icon:hover{background:var(--gray-100)}
+
+/* ─── FORMS ─── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+label{font-size:12px;font-weight:600;color:var(--gray-700)}
+input,select,textarea{
+  padding:9px 12px;border:1.5px solid var(--gray-300);border-radius:8px;
+  font-size:13px;font-family:inherit;background:var(--white);
+  color:var(--gray-900);transition:.15s;outline:none;width:100%;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--blue-600);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+input.err{border-color:var(--red);background:#fff8f8}
+input.ok{border-color:var(--green)}
+.ferr{font-size:11px;color:var(--red);margin-top:3px;display:none}
+.ferr.v{display:block}
+
+/* ─── POS ─── */
+.pos-layout{display:grid;grid-template-columns:1fr 340px;gap:14px;height:calc(100vh - var(--header-h) - var(--subheader-h) - 40px)}
+.pos-left{display:flex;flex-direction:column;overflow:hidden}
+.pos-search{position:relative;margin-bottom:12px}
+.pos-search input{padding-left:36px}
+.pos-search-ic{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--gray-400);font-size:16px}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;overflow-y:auto;flex:1;padding-right:4px}
+.prod-card{
+  background:var(--white);border:1.5px solid var(--gray-100);border-radius:var(--radius);
+  padding:12px 10px;text-align:center;cursor:pointer;transition:.15s;
+}
+.prod-card:hover{border-color:var(--blue-600);box-shadow:0 0 0 3px rgba(37,99,235,.08);transform:translateY(-1px)}
+.prod-card.out{opacity:.45;cursor:not-allowed;filter:grayscale(.5)}
+.prod-emoji{font-size:26px;margin-bottom:6px}
+.prod-name{font-size:12px;font-weight:600;color:var(--gray-800);margin-bottom:3px;line-height:1.3}
+.prod-price{font-size:13px;font-weight:700;color:var(--blue-700)}
+.prod-stock{font-size:11px;margin-top:2px}
+
+/* ─── CART ─── */
+.cart{display:flex;flex-direction:column;background:var(--white);border-radius:var(--radius);border:1.5px solid var(--gray-100);box-shadow:var(--shadow-md);overflow:hidden}
+.cart-head{padding:13px 16px;border-bottom:1px solid var(--gray-100);display:flex;justify-content:space-between;align-items:center;background:var(--blue-800)}
+.cart-head-title{font-size:14px;font-weight:700;color:#fff}
+.cart-items{flex:1;overflow-y:auto;padding:6px 0}
+.cart-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--gray-50)}
+.cart-item:last-child{border-bottom:none}
+.ci-name{flex:1;font-size:12px;font-weight:500;color:var(--gray-800);line-height:1.3}
+.ci-qty{display:flex;align-items:center;gap:5px}
+.qty-btn{width:22px;height:22px;border-radius:5px;border:1px solid var(--gray-300);background:var(--gray-50);font-size:13px;display:flex;align-items:center;justify-content:center;transition:.1s}
+.qty-btn:hover{background:var(--blue-100);border-color:var(--blue-300)}
+.ci-total{font-size:12px;font-weight:700;color:var(--blue-700);min-width:68px;text-align:right}
+.cart-empty{text-align:center;padding:40px 16px;color:var(--gray-400)}
+.cart-empty-icon{font-size:36px;margin-bottom:8px}
+.cart-footer{border-top:1px solid var(--gray-100);padding:13px 16px}
+.cart-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0}
+.cart-total-row{font-size:16px;font-weight:800;color:var(--gray-900);margin:8px 0}
+.pay-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0}
+.pay-opt{
+  padding:8px 4px;border:1.5px solid var(--gray-200);border-radius:8px;
+  font-size:11px;font-weight:600;text-align:center;background:var(--gray-50);
+  transition:.15s;cursor:pointer;color:var(--gray-600);
+}
+.pay-opt.sel{border-color:var(--blue-600);background:var(--blue-50);color:var(--blue-700)}
+
+/* ─── CHART BAR ─── */
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
+.bar-label{width:130px;color:var(--gray-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.bar-track{flex:1;height:18px;background:var(--gray-100);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:var(--blue-600);border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.bar-val{width:90px;text-align:right;font-weight:600;color:var(--gray-800);flex-shrink:0}
+
+/* ─── MODAL ─── */
+.modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:400;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(2px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:14px;width:100%;max-width:500px;box-shadow:0 20px 60px rgba(0,0,0,.18);overflow:hidden}
+.modal-head{padding:18px 22px;border-bottom:1px solid var(--gray-100);display:flex;justify-content:space-between;align-items:center}
+.modal-title{font-size:15px;font-weight:700;color:var(--gray-900)}
+.modal-body{padding:20px 22px;max-height:65vh;overflow-y:auto}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--gray-100);display:flex;gap:8px;justify-content:flex-end}
+
+/* ─── TRIAL BANNER ─── */
+.trial-banner{
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#f59e0b,#d97706);
+  color:var(--white);padding:10px 20px;
+  position:fixed;bottom:0;left:0;right:0;z-index:180;
+  box-shadow:0 -2px 12px rgba(245,158,11,.3);
+}
+.trial-text{flex:1;font-size:13px;font-weight:600}
+.trial-sub{font-size:11px;opacity:.85;display:block;margin-top:1px}
+.trial-btn{background:var(--white);color:var(--amber);border:none;padding:7px 16px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:.15s;flex-shrink:0}
+.trial-btn:hover{background:var(--amber-lt)}
+.trial-close{background:none;border:none;color:rgba(255,255,255,.7);font-size:18px;cursor:pointer;padding:0 4px;flex-shrink:0}
+
+/* ─── SUBSCRIPTION SCREEN ─── */
+.sub-overlay{position:fixed;inset:0;background:rgba(15,23,42,.8);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px)}
+.sub-overlay.open{display:flex}
+.sub-box{background:var(--white);border-radius:16px;width:100%;max-width:560px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.sub-head{background:var(--blue-800);padding:28px 28px 20px;text-align:center;color:#fff}
+.sub-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.sub-sub{font-size:13px;opacity:.75}
+.sub-plans{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px}
+.plan-card{
+  border:2px solid var(--gray-200);border-radius:12px;padding:14px;
+  cursor:pointer;transition:.15s;text-align:center;position:relative;
+}
+.plan-card:hover{border-color:var(--blue-600);background:var(--blue-50)}
+.plan-card.sel{border-color:var(--blue-600);background:var(--blue-50)}
+.plan-card.popular::before{
+  content:'Populaire';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  background:var(--blue-600);color:#fff;font-size:10px;font-weight:700;
+  padding:2px 10px;border-radius:0 0 6px 6px;
+}
+.plan-name{font-size:13px;font-weight:700;color:var(--gray-800);margin-bottom:4px}
+.plan-price{font-size:20px;font-weight:800;color:var(--blue-700)}
+.plan-period{font-size:11px;color:var(--gray-500)}
+.plan-economy{font-size:11px;color:var(--green);font-weight:600;margin-top:3px}
+.sub-footer{padding:0 20px 20px;display:flex;flex-direction:column;gap:10px}
+.om-info{background:var(--amber-lt);border-radius:10px;padding:12px 14px;font-size:12px;color:#78350f}
+.om-number{font-size:18px;font-weight:800;color:var(--amber);display:block;margin:4px 0}
+
+/* ─── SETUP & LOGIN ─── */
+.full-overlay{position:fixed;inset:0;z-index:600;display:flex;align-items:center;justify-content:center;padding:16px}
+.full-overlay.hidden{display:none}
+.setup-bg{background:linear-gradient(160deg,var(--blue-900) 0%,var(--blue-700) 100%)}
+.login-bg{background:linear-gradient(160deg,var(--gray-900) 0%,var(--blue-900) 100%)}
+.auth-box{background:var(--white);border-radius:16px;width:100%;max-width:460px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+.auth-head{padding:26px 28px 18px;text-align:center}
+.auth-head-blue{background:var(--blue-800)}
+.auth-logo{font-size:36px;margin-bottom:8px}
+.auth-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:4px}
+.auth-sub{font-size:12px;color:rgba(255,255,255,.6)}
+.auth-body{padding:22px 28px}
+.auth-foot{padding:14px 28px 22px;border-top:1px solid var(--gray-100);display:flex;gap:8px;justify-content:flex-end}
+.steps-bar{display:flex;gap:6px;margin-bottom:18px}
+.step-dot{height:4px;flex:1;border-radius:2px;background:var(--gray-200);transition:.3s}
+.step-dot.on{background:var(--blue-600)}
+.auth-step{display:none}
+.auth-step.on{display:block}
+.step-label{font-size:13px;font-weight:700;color:var(--blue-700);margin-bottom:14px}
+
+/* biz type grid */
+.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.biz-card{border:2px solid var(--gray-200);border-radius:10px;padding:13px;text-align:center;cursor:pointer;transition:.15s}
+.biz-card:hover,.biz-card.sel{border-color:var(--blue-600);background:var(--blue-50)}
+.biz-card .biz-icon{font-size:26px;margin-bottom:5px}
+.biz-card .biz-label{font-size:12px;font-weight:600;color:var(--gray-700)}
+
+/* login */
+.user-list{display:flex;flex-direction:column;gap:7px}
+.u-card{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:10px;cursor:pointer;transition:.15s}
+.u-card:hover,.u-card.sel{border-color:var(--blue-600);background:var(--blue-50)}
+.u-av{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.u-av-blue{background:var(--blue-700)}
+.u-av-amber{background:var(--amber)}
+.u-av-green{background:var(--green)}
+.u-name{font-size:13px;font-weight:600;color:var(--gray-900)}
+.u-role-text{font-size:11px;color:var(--gray-500)}
+.pin-sec{margin-top:14px}
+.pin-label{font-size:13px;font-weight:600;color:var(--gray-700);text-align:center;margin-bottom:10px}
+.pin-dots{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--gray-300);transition:.15s}
+.pin-dot.on{background:var(--blue-700);border-color:var(--blue-700)}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.kkey{padding:13px;border:1.5px solid var(--gray-200);border-radius:9px;font-size:17px;font-weight:600;text-align:center;cursor:pointer;background:var(--gray-50);transition:.15s;user-select:none}
+.kkey:hover{background:var(--blue-700);color:#fff;border-color:var(--blue-700)}
+.kkey.del{font-size:13px;color:var(--red)}
+.kkey.cancel-key{font-size:11px;color:var(--gray-500)}
+.pin-err{background:var(--red-lt);border:1px solid #fca5a5;border-radius:7px;padding:7px 12px;font-size:12px;color:var(--red);text-align:center;margin-top:8px;display:none}
+
+/* ─── CREDIT STATS ─── */
+.credit-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.cstat{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-100);padding:14px 16px}
+.cstat-label{font-size:11px;color:var(--gray-500);font-weight:500}
+.cstat-val{font-size:20px;font-weight:800;margin-top:4px}
+
+/* ─── CHANGE PIN OBLIGATOIRE ─── */
+.pin-change-box{background:var(--white);border-radius:16px;width:100%;max-width:400px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.3)}
+.pin-change-head{background:linear-gradient(135deg,var(--amber),#d97706);padding:22px 24px;text-align:center;color:#fff}
+.pin-change-head .ic{font-size:32px;margin-bottom:6px}
+.pin-change-head h2{font-size:17px;font-weight:800;margin-bottom:3px}
+.pin-change-head p{font-size:12px;opacity:.85}
+.pin-change-body{padding:22px 24px}
+.pin-step{display:none}
+.pin-step.on{display:block}
+.pin-step-label{font-size:13px;font-weight:600;color:var(--gray-700);margin-bottom:10px}
+.pin-display{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.pin-display-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--gray-300);transition:.15s}
+.pin-display-dot.on{background:var(--blue-700);border-color:var(--blue-700)}
+.pin-display-dot.on-amber{background:var(--amber);border-color:var(--amber)}
+.confirm-dots .pin-display-dot.on{background:var(--green);border-color:var(--green)}
+.pin-change-foot{padding:0 24px 20px;display:flex;gap:8px}
+
+/* ─── RÉCUPÉRATION COMPTE ─── */
+.recovery-info{background:var(--blue-50);border:1px solid var(--blue-100);border-radius:10px;padding:14px;font-size:13px;color:var(--blue-800);margin-bottom:14px}
+.recovery-info strong{display:block;margin-bottom:4px}
+.multi-machine-note{background:var(--amber-lt);border:1px solid #fcd34d;border-radius:8px;padding:10px 12px;font-size:12px;color:#78350f;margin-top:12px}
+
+/* ─── RECEIPT ─── */
+.receipt{background:var(--gray-50);border-radius:8px;padding:16px;font-size:13px}
+.receipt-head{text-align:center;padding-bottom:12px;border-bottom:1px dashed var(--gray-300);margin-bottom:12px}
+.receipt-row{display:flex;justify-content:space-between;padding:3px 0}
+.receipt-total{font-weight:800;font-size:15px;border-top:1px dashed var(--gray-300);margin-top:8px;padding-top:8px}
+
+/* ─── TOAST ─── */
+.toasts{position:fixed;bottom:20px;right:20px;z-index:700;display:flex;flex-direction:column;gap:7px}
+.toast{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,.15);animation:toastIn .25s ease;color:#fff;max-width:320px}
+.toast-success{background:var(--green)}
+.toast-error{background:var(--red)}
+.toast-info{background:var(--blue-700)}
+.toast-warn{background:var(--amber)}
+@keyframes toastIn{from{transform:translateX(110%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ─── EMPTY STATE ─── */
+.empty{text-align:center;padding:48px 20px}
+.empty-icon{font-size:40px;margin-bottom:10px}
+.empty-title{font-size:14px;font-weight:600;color:var(--gray-600);margin-bottom:5px}
+.empty-sub{font-size:12px;color:var(--gray-400);margin-bottom:16px}
+
+/* ─── PERIOD TABS ─── */
+.period-tabs{display:flex;gap:4px;background:var(--gray-100);border-radius:8px;padding:3px;margin-bottom:16px;width:fit-content}
+.ptab{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:.15s;border:none;background:transparent}
+.ptab.on{background:var(--white);color:var(--blue-700);box-shadow:var(--shadow-sm)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .header-nav{display:none}
+  .header-menu-btn{display:block}
+  .mobile-nav{
+    position:fixed;top:var(--header-h);left:0;right:0;bottom:0;
+    background:var(--blue-900);z-index:190;display:none;flex-direction:column;
+    padding:12px;overflow-y:auto;
+  }
+  .mobile-nav.open{display:flex}
+  .mob-nav-btn{
+    display:flex;align-items:center;gap:10px;padding:12px 14px;
+    color:rgba(255,255,255,.75);font-size:14px;font-weight:500;
+    border-radius:9px;transition:.15s;cursor:pointer;border:none;background:none;
+  }
+  .mob-nav-btn:hover,.mob-nav-btn.active{background:rgba(255,255,255,.1);color:#fff}
+  .pos-layout{grid-template-columns:1fr;height:auto}
+  .products-grid{max-height:50vh}
+  .dash-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .sub-plans{grid-template-columns:1fr 1fr}
+  .content{padding:14px}
+}
+@media(max-width:480px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .sub-plans{grid-template-columns:1fr}
+  .biz-grid{grid-template-columns:1fr 1fr}
+  .header{padding:0 12px;gap:10px}
+  .header-logo-text{font-size:15px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SETUP OVERLAY
+══════════════════════════════════════════ -->
+<div class="full-overlay setup-bg" id="setupOverlay">
+  <div class="auth-box">
+    <div class="auth-head auth-head-blue">
+      <div class="auth-logo">🏪</div>
+      <div class="auth-title">Bienvenue sur GestStock</div>
+      <div class="auth-sub">Configurons votre boutique en 3 étapes</div>
+    </div>
+    <div class="auth-body">
+      <div class="steps-bar">
+        <div class="step-dot on" id="sd1"></div>
+        <div class="step-dot" id="sd2"></div>
+        <div class="step-dot" id="sd3"></div>
+      </div>
+      <!-- Étape 1 -->
+      <div class="auth-step on" id="ss1">
+        <div class="step-label">🏪 Informations de votre boutique</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Nom de la boutique *</label>
+            <input id="sn" placeholder="Ex : Boutique Mamadou & Fils">
+            <span class="ferr" id="sn-err"></span>
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input id="sp" placeholder="+224 6XX XX XX XX">
+            <span class="ferr" id="sp-err"></span>
+          </div>
+          <div class="form-group">
+            <label>Devise</label>
+            <select id="scur"><option value="GNF">GNF — Franc Guinéen</option><option value="USD">USD — Dollar</option><option value="EUR">EUR — Euro</option></select>
+          </div>
+          <div class="form-group full">
+            <label>Adresse</label>
+            <input id="sa" placeholder="Ex : Keitayah, Kagbelen, Conakry">
+          </div>
+        </div>
+      </div>
+      <!-- Étape 2 -->
+      <div class="auth-step" id="ss2">
+        <div class="step-label">🛍️ Type de commerce</div>
+        <div class="biz-grid">
+          <div class="biz-card sel" onclick="selBiz(this,'epicerie')"><div class="biz-icon">🛒</div><div class="biz-label">Épicerie / Alimentation</div></div>
+          <div class="biz-card" onclick="selBiz(this,'textile')"><div class="biz-icon">👘</div><div class="biz-label">Textile / Vêtements</div></div>
+          <div class="biz-card" onclick="selBiz(this,'electronique')"><div class="biz-icon">📱</div><div class="biz-label">Électronique</div></div>
+          <div class="biz-card" onclick="selBiz(this,'autre')"><div class="biz-icon">🏪</div><div class="biz-label">Autre commerce</div></div>
+        </div>
+      </div>
+      <!-- Étape 3 -->
+      <div class="auth-step" id="ss3">
+        <div class="step-label">👤 Compte propriétaire</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Votre nom complet *</label>
+            <input id="on" placeholder="Ex : Mamadou Kofi Diallo">
+            <span class="ferr" id="on-err"></span>
+          </div>
+          <div class="form-group full">
+            <label>PIN de sécurité (4 chiffres) *</label>
+            <input type="password" id="opin" placeholder="4 chiffres" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')">
+            <span class="ferr" id="opin-err"></span>
+          </div>
+          <div class="form-group full">
+            <label>Données de démonstration</label>
+            <select id="sdemo"><option value="yes">Oui — charger des données démo (recommandé)</option><option value="no">Non — démarrer avec une boutique vide</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-foot">
+      <button class="btn btn-ghost" id="setup-back" onclick="setupPrev()" style="display:none">← Retour</button>
+      <button class="btn btn-primary" id="setup-next" onclick="setupNext()">Suivant →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     LOGIN OVERLAY
+══════════════════════════════════════════ -->
+<div class="full-overlay login-bg hidden" id="loginOverlay">
+  <div class="auth-box">
+    <div class="auth-head auth-head-blue">
+      <div class="auth-logo">🔐</div>
+      <div class="auth-title" id="loginTitle">Connexion</div>
+      <div class="auth-sub" id="loginSub">Choisissez votre compte</div>
+    </div>
+    <div class="auth-body">
+      <div class="user-list" id="userList"></div>
+      <div class="pin-sec" id="pinSec" style="display:none">
+        <div class="pin-label" id="pinLabel">Entrez votre PIN</div>
+        <div class="pin-dots">
+          <div class="pin-dot" id="pd0"></div><div class="pin-dot" id="pd1"></div>
+          <div class="pin-dot" id="pd2"></div><div class="pin-dot" id="pd3"></div>
+        </div>
+        <div class="keypad">
+          <div class="kkey" onclick="pk('1')">1</div><div class="kkey" onclick="pk('2')">2</div><div class="kkey" onclick="pk('3')">3</div>
+          <div class="kkey" onclick="pk('4')">4</div><div class="kkey" onclick="pk('5')">5</div><div class="kkey" onclick="pk('6')">6</div>
+          <div class="kkey" onclick="pk('7')">7</div><div class="kkey" onclick="pk('8')">8</div><div class="kkey" onclick="pk('9')">9</div>
+          <div class="kkey cancel-key" onclick="pinCancel()">Annuler</div>
+          <div class="kkey" onclick="pk('0')">0</div>
+          <div class="kkey del" onclick="pkDel()">⌫</div>
+        </div>
+        <div class="pin-err" id="pinErr">❌ PIN incorrect — réessayez</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SUBSCRIPTION OVERLAY
+══════════════════════════════════════════ -->
+<div class="sub-overlay" id="subOverlay">
+  <div class="sub-box">
+    <div class="sub-head">
+      <div class="sub-title">⏰ Votre essai est terminé</div>
+      <div class="sub-sub">Choisissez un abonnement pour continuer</div>
+    </div>
+    <div class="sub-plans" id="subPlans"></div>
+    <div class="sub-footer">
+      <div class="om-info">
+        <strong>💛 Paiement via Orange Money Guinée</strong><br>
+        Envoyez le montant correspondant au numéro :<br>
+        <span class="om-number">+224 610 49 89 71</span>
+        Puis entrez la référence de transaction ci-dessous pour activer votre abonnement.
+      </div>
+      <input id="omRef" placeholder="Référence transaction Orange Money (ex: OM2025XXXXXX)">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px" onclick="activateSub()">✅ Activer mon abonnement</button>
+      <button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="document.getElementById('subOverlay').classList.remove('open')">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header class="header">
+  <div class="header-logo">
+    <div class="header-logo-icon">🏪</div>
+    <div>
+      <div class="header-logo-text">GestStock</div>
+      <span class="header-logo-sub" id="shopNameDisplay">Boutique</span>
+    </div>
+  </div>
+  <nav class="header-nav" id="headerNav">
+    <button class="nav-btn active" onclick="go('dashboard',this)">📊 <span data-fr="Tableau de bord" data-en="Dashboard">Tableau de bord</span></button>
+    <button class="nav-btn" onclick="go('vente',this)">🛒 <span data-fr="Vente" data-en="Sale">Vente</span></button>
+    <button class="nav-btn" onclick="go('stock',this)" style="position:relative">📦 <span data-fr="Stock" data-en="Stock">Stock</span><span class="nav-badge" id="alertBadge" style="display:none">0</span></button>
+    <button class="nav-btn" onclick="go('fournisseurs',this)">🚚 <span data-fr="Fournisseurs" data-en="Suppliers">Fournisseurs</span></button>
+    <button class="nav-btn" onclick="go('credit',this)">💳 <span data-fr="Crédit" data-en="Credit">Crédit</span></button>
+    <button class="nav-btn" onclick="go('rapport',this)">📈 <span data-fr="Rapports" data-en="Reports">Rapports</span></button>
+    <button class="nav-btn" onclick="go('historique',this)">🕒 <span data-fr="Historique" data-en="History">Historique</span></button>
+    <button class="nav-btn" onclick="go('users',this)">👥 <span data-fr="Utilisateurs" data-en="Users">Utilisateurs</span></button>
+    <button class="nav-btn" onclick="go('parametres',this)">⚙️ <span data-fr="Paramètres" data-en="Settings">Paramètres</span></button>
+  </nav>
+  <div class="header-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="user-chip" id="userChip" onclick="openLogin()" style="display:none">
+      <div class="user-avatar" id="chipAv">?</div>
+      <div><div class="user-name" id="chipName">—</div><div class="user-role" id="chipRole">—</div></div>
+    </button>
+    <button class="header-menu-btn" onclick="toggleMobNav()">☰</button>
+  </div>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mob-nav-btn" onclick="go('dashboard');closeMobNav()">📊 Tableau de bord</button>
+  <button class="mob-nav-btn" onclick="go('vente');closeMobNav()">🛒 Nouvelle vente</button>
+  <button class="mob-nav-btn" onclick="go('stock');closeMobNav()">📦 Stock & Produits</button>
+  <button class="mob-nav-btn" onclick="go('fournisseurs');closeMobNav()">🚚 Fournisseurs</button>
+  <button class="mob-nav-btn" onclick="go('credit');closeMobNav()">💳 Crédit clients</button>
+  <button class="mob-nav-btn" onclick="go('rapport');closeMobNav()">📈 Rapports</button>
+  <button class="mob-nav-btn" onclick="go('historique');closeMobNav()">🕒 Historique</button>
+  <button class="mob-nav-btn" onclick="go('users');closeMobNav()">👥 Utilisateurs</button>
+  <button class="mob-nav-btn" onclick="go('parametres');closeMobNav()">⚙️ Paramètres</button>
+</div>
+
+<!-- Subheader -->
+<div class="subheader">
+  <div class="subheader-title" id="pageTitle">Tableau de bord</div>
+  <span class="subheader-sub" id="pageSub"></span>
+  <div id="subheaderActions"></div>
+</div>
+
+<!-- Trial banner -->
+<div class="trial-banner" id="trialBanner" style="display:none">
+  <div class="trial-text">
+    ⏳ <span id="trialMsg">Période d'essai</span>
+    <span class="trial-sub" id="trialSub"></span>
+  </div>
+  <button class="trial-btn" onclick="openSub()">Souscrire →</button>
+  <button class="trial-close" onclick="document.getElementById('trialBanner').style.display='none'">✕</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONTENT PAGES
+══════════════════════════════════════════ -->
+<main class="content" id="mainContent" style="padding-bottom:70px">
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dashboard">
+    <div class="kpi-grid">
+      <div class="kpi blue"><div class="kpi-icon">💰</div><div class="kpi-label" data-fr="Ventes aujourd'hui" data-en="Today's sales">Ventes aujourd'hui</div><div class="kpi-value" id="kv1">—</div><div class="kpi-sub" id="ks1"></div></div>
+      <div class="kpi green"><div class="kpi-icon">📦</div><div class="kpi-label" data-fr="Produits en stock" data-en="Products in stock">Produits en stock</div><div class="kpi-value" id="kv2">—</div><div class="kpi-sub" data-fr="références actives" data-en="active references">références actives</div></div>
+      <div class="kpi amber"><div class="kpi-icon">⚠️</div><div class="kpi-label" data-fr="Alertes stock" data-en="Stock alerts">Alertes stock</div><div class="kpi-value" id="kv3">—</div><div class="kpi-sub" data-fr="à réapprovisionner" data-en="to restock">à réapprovisionner</div></div>
+      <div class="kpi red"><div class="kpi-icon">💳</div><div class="kpi-label" data-fr="Crédit impayé" data-en="Unpaid credit">Crédit impayé</div><div class="kpi-value" id="kv4">—</div><div class="kpi-sub" data-fr="à récupérer" data-en="to collect">à récupérer</div></div>
+    </div>
+    <div class="dash-grid">
+      <div class="card"><div class="card-title">⚠️ <span data-fr="Stock faible" data-en="Low stock">Stock faible</span></div><div id="dashAlerts"></div></div>
+      <div class="card"><div class="card-title">🏆 <span data-fr="Top ventes" data-en="Top sales">Top ventes</span></div><div id="dashTop"></div></div>
+    </div>
+  </div>
+
+  <!-- VENTE -->
+  <div class="page" id="page-vente">
+    <div class="pos-layout">
+      <div class="pos-left">
+        <div class="pos-search"><span class="pos-search-ic">🔍</span><input id="posSearch" placeholder="Rechercher un produit…" oninput="renderProd()"></div>
+        <div class="products-grid" id="prodGrid"></div>
+      </div>
+      <div class="cart">
+        <div class="cart-head"><span class="cart-head-title">🛒 <span data-fr="Panier" data-en="Cart">Panier</span></span><button class="btn btn-ghost btn-sm" style="color:#fff;border-color:rgba(255,255,255,.3)" onclick="clearCart()" data-fr="Vider" data-en="Clear">Vider</button></div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+          <div class="cart-row"><span data-fr="Sous-total" data-en="Subtotal">Sous-total</span><span id="cSub">0 GNF</span></div>
+          <div class="cart-row" style="align-items:center;gap:8px"><span data-fr="Remise (GNF)" data-en="Discount (GNF)">Remise</span><input type="number" id="cDisc" value="0" min="0" style="width:90px;padding:4px 8px;font-size:12px" oninput="updCart()"></div>
+          <div class="cart-row cart-total-row"><span>TOTAL</span><span id="cTotal">0 GNF</span></div>
+          <div class="pay-opts">
+            <div class="pay-opt sel" id="po-especes" onclick="selPay('especes')">💵 <br><span data-fr="Espèces" data-en="Cash">Espèces</span></div>
+            <div class="pay-opt" id="po-mobile" onclick="selPay('mobile')">📱<br>Mobile</div>
+            <div class="pay-opt" id="po-credit" onclick="selPay('credit')">📋<br><span data-fr="Crédit" data-en="Credit">Crédit</span></div>
+          </div>
+          <div id="creditNameRow" style="display:none;margin-bottom:8px">
+            <input id="creditName" placeholder="Nom du client créditeur…">
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;padding:11px;margin-top:4px" onclick="doVente()" data-fr="✅ Valider la vente" data-en="✅ Confirm sale">✅ Valider la vente</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOCK -->
+  <div class="page" id="page-stock">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
+      <input id="stockQ" placeholder="Rechercher…" style="max-width:200px" oninput="renderStock()">
+      <select id="stockCat" onchange="renderStock()"><option value="">Toutes catégories</option><option>Alimentation</option><option>Boissons</option><option>Hygiène</option><option>Textile</option><option>Électronique</option><option>Autre</option></select>
+      <select id="stockFil" onchange="renderStock()"><option value="">Tous</option><option value="low">Stock faible</option><option value="out">Épuisé</option></select>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Produit</th><th>Catégorie</th><th>Prix vente</th><th>Stock</th><th>Seuil</th><th>Statut</th><th>Actions</th></tr></thead>
+      <tbody id="stockTbl"></tbody></table>
+    </div>
+  </div>
+
+  <!-- FOURNISSEURS -->
+  <div class="page" id="page-fournisseurs">
+    <div class="table-wrap">
+      <table><thead><tr><th>Nom</th><th>Téléphone</th><th>Produits</th><th>Délai</th><th>Actions</th></tr></thead>
+      <tbody id="supplTbl"></tbody></table>
+    </div>
+  </div>
+
+  <!-- CRÉDIT -->
+  <div class="page" id="page-credit">
+    <div class="credit-stats">
+      <div class="cstat"><div class="cstat-label">Total impayé</div><div class="cstat-val" id="totalCred" style="color:var(--red)">0 GNF</div></div>
+      <div class="cstat"><div class="cstat-label">Clients débiteurs</div><div class="cstat-val" id="nbCred">0</div></div>
+    </div>
+    <div class="table-wrap">
+      <table><thead><tr><th>Client</th><th>Montant dû</th><th>Date</th><th>Produits</th><th>Actions</th></tr></thead>
+      <tbody id="creditTbl"></tbody></table>
+    </div>
+  </div>
+
+  <!-- RAPPORTS -->
+  <div class="page" id="page-rapport">
+    <div class="period-tabs">
+      <button class="ptab on" onclick="setPer('today',this)">Aujourd'hui</button>
+      <button class="ptab" onclick="setPer('week',this)">Cette semaine</button>
+      <button class="ptab" onclick="setPer('month',this)">Ce mois</button>
+    </div>
+    <div class="kpi-grid" style="margin-bottom:18px">
+      <div class="kpi blue"><div class="kpi-label">Chiffre d'affaires</div><div class="kpi-value" id="rCA">0 GNF</div></div>
+      <div class="kpi green"><div class="kpi-label">Nombre de ventes</div><div class="kpi-value" id="rNb">0</div></div>
+      <div class="kpi amber"><div class="kpi-label">Panier moyen</div><div class="kpi-value" id="rAvg">0 GNF</div></div>
+    </div>
+    <div class="card"><div class="card-title">🏆 Produits les plus vendus</div><div id="bestChart"></div></div>
+  </div>
+
+  <!-- HISTORIQUE -->
+  <div class="page" id="page-historique">
+    <div class="table-wrap">
+      <table><thead><tr><th>Date / Heure</th><th>Articles</th><th>Total</th><th>Paiement</th><th>Caissier</th></tr></thead>
+      <tbody id="histTbl"></tbody></table>
+    </div>
+  </div>
+
+  <!-- UTILISATEURS -->
+  <div class="page" id="page-users">
+    <div class="table-wrap">
+      <table><thead><tr><th>Nom</th><th>Rôle</th><th>Accès</th><th>Statut</th></tr></thead>
+      <tbody id="usersTbl"></tbody></table>
+    </div>
+  </div>
+
+  <!-- PARAMÈTRES -->
+  <div class="page" id="page-parametres">
+    <div class="card" style="max-width:480px">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nom de la boutique</label><input id="pShopName" value="Boutique"></div>
+        <div class="form-group"><label>Téléphone</label><input id="pPhone" value="+224 610 49 89 71"></div>
+        <div class="form-group"><label>Devise</label><select id="pCur"><option value="GNF">GNF</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div>
+        <div class="form-group full"><label>Adresse</label><input id="pAddr" value="Keitayah, Kagbelen, Conakry"></div>
+        <div class="form-group full"><button class="btn btn-primary" onclick="toast('Paramètres enregistrés ✓','success')">Enregistrer</button></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ══════════════════════════════════════════
+     MODALS
+══════════════════════════════════════════ -->
+<!-- Produit -->
+<div class="modal-overlay" id="mProd">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title" id="mProdTitle">Ajouter un produit</div><button class="btn-icon" onclick="cm('mProd')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="epid">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nom du produit *</label><input id="pNom" placeholder="Ex : Riz parfumé 25kg" oninput="ce('pNom')"><span class="ferr" id="e-pNom"></span></div>
+        <div class="form-group"><label>Catégorie</label><select id="pCat"><option>Alimentation</option><option>Boissons</option><option>Hygiène</option><option>Textile</option><option>Électronique</option><option>Autre</option></select></div>
+        <div class="form-group"><label>Unité</label><select id="pUnit"><option>Pièce</option><option>Kg</option><option>Litre</option><option>Boîte</option><option>Carton</option><option>Sachet</option></select></div>
+        <div class="form-group"><label>Prix d'achat (GNF) *</label><input id="pAchat" placeholder="65000" oninput="vMoney('pAchat')"><span class="ferr" id="e-pAchat"></span></div>
+        <div class="form-group"><label>Prix de vente (GNF) *</label><input id="pVente" placeholder="80000" oninput="vMoney('pVente')"><span class="ferr" id="e-pVente"></span></div>
+        <div class="form-group"><label>Quantité en stock *</label><input id="pQte" placeholder="30" oninput="vInt('pQte')"><span class="ferr" id="e-pQte"></span></div>
+        <div class="form-group"><label>Seuil d'alerte *</label><input id="pSeuil" placeholder="5" oninput="vInt('pSeuil')"><span class="ferr" id="e-pSeuil"></span></div>
+        <div class="form-group"><label>Emoji</label><input id="pEmoji" placeholder="📦" maxlength="2"></div>
+        <div class="form-group"><label>Fournisseur</label><input id="pFourn" placeholder="Grossiste Madina"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="cm('mProd')">Annuler</button><button class="btn btn-primary" onclick="saveProd()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- Fournisseur -->
+<div class="modal-overlay" id="mSuppl">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Ajouter un fournisseur</div><button class="btn-icon" onclick="cm('mSuppl')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nom *</label><input id="sNom" placeholder="Grossiste Madina" oninput="ce('sNom')"><span class="ferr" id="e-sNom"></span></div>
+        <div class="form-group"><label>Téléphone *</label><input id="sTel" placeholder="+224 6XX XX XX XX" oninput="vPhone('sTel')"><span class="ferr" id="e-sTel"></span></div>
+        <div class="form-group"><label>Délai livraison</label><select id="sDelai"><option>Immédiat</option><option>1-2 jours</option><option>3-5 jours</option><option>1 semaine+</option></select></div>
+        <div class="form-group full"><label>Produits fournis</label><input id="sProd" placeholder="Riz, huile, farine…"></div>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="cm('mSuppl')">Annuler</button><button class="btn btn-primary" onclick="saveSuppl()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- Utilisateur -->
+<div class="modal-overlay" id="mUser">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">Ajouter un utilisateur</div><button class="btn-icon" onclick="cm('mUser')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label>Nom complet *</label><input id="uNom" placeholder="Mamadou Camara" oninput="ce('uNom')"><span class="ferr" id="e-uNom"></span></div>
+        <div class="form-group full"><label>Rôle</label><select id="uRole"><option>Gérant</option><option>Caissier</option></select></div>
+      </div>
+      <div class="alert alert-amber" style="margin-top:12px;font-size:12px">
+        🔒 <strong>PIN initial automatique : 0000</strong><br>L'utilisateur devra obligatoirement définir son propre PIN secret à sa première connexion.
+      </div>
+      <div class="alert alert-blue" style="margin-top:8px;font-size:12px">
+        ℹ️ <strong>Accès :</strong> Gérant → ventes + stock + rapports &nbsp;|&nbsp; Caissier → ventes uniquement<br>
+        🌐 <strong>Multi-appareils :</strong> Dans la version complète (avec serveur), ce compte sera accessible depuis n'importe quel appareil avec l'app installée.
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="cm('mUser')">Annuler</button><button class="btn btn-primary" onclick="saveUser()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- Reçu -->
+<div class="modal-overlay" id="mReceipt">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">🧾 Reçu de vente</div><button class="btn-icon" onclick="cm('mReceipt')">✕</button></div>
+    <div class="modal-body"><div class="receipt" id="receiptContent"></div></div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="cm('mReceipt')">Fermer</button><button class="btn btn-primary" onclick="window.print()">🖨️ Imprimer</button></div>
+  </div>
+</div>
+
+<!-- Paiement crédit -->
+<div class="modal-overlay" id="mPayCred">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">💵 Enregistrer un paiement</div><button class="btn-icon" onclick="cm('mPayCred')">✕</button></div>
+    <div class="modal-body">
+      <p id="credPayInfo" style="margin-bottom:14px;font-size:13px"></p>
+      <div class="form-group"><label>Montant payé (GNF)</label><input type="number" id="credPayAmt" placeholder="0"></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost" onclick="cm('mPayCred')">Annuler</button><button class="btn btn-primary" onclick="doCredPay()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- ── MODAL CHANGEMENT PIN OBLIGATOIRE ── -->
+<div class="modal-overlay" id="mChangePIN" style="z-index:550">
+  <div class="pin-change-box">
+    <div class="pin-change-head">
+      <div class="ic">🔒</div>
+      <h2>Changement de PIN requis</h2>
+      <p>Votre compte vient d'être créé par l'administrateur.<br>Vous devez définir votre propre PIN secret.</p>
+    </div>
+    <div class="pin-change-body">
+      <!-- Étape 1 : nouveau PIN -->
+      <div class="pin-step on" id="cpStep1">
+        <div class="pin-step-label">Entrez votre nouveau PIN (4 chiffres)</div>
+        <div class="pin-display" id="cpDots1">
+          <div class="pin-display-dot" id="cpd1-0"></div><div class="pin-display-dot" id="cpd1-1"></div>
+          <div class="pin-display-dot" id="cpd1-2"></div><div class="pin-display-dot" id="cpd1-3"></div>
+        </div>
+        <div class="keypad">
+          <div class="kkey" onclick="cpKey('1',1)">1</div><div class="kkey" onclick="cpKey('2',1)">2</div><div class="kkey" onclick="cpKey('3',1)">3</div>
+          <div class="kkey" onclick="cpKey('4',1)">4</div><div class="kkey" onclick="cpKey('5',1)">5</div><div class="kkey" onclick="cpKey('6',1)">6</div>
+          <div class="kkey" onclick="cpKey('7',1)">7</div><div class="kkey" onclick="cpKey('8',1)">8</div><div class="kkey" onclick="cpKey('9',1)">9</div>
+          <div class="kkey" style="visibility:hidden"></div><div class="kkey" onclick="cpKey('0',1)">0</div><div class="kkey del" onclick="cpDel(1)">⌫</div>
+        </div>
+        <div class="alert alert-blue" style="margin-top:12px;font-size:12px">⚠️ Choisissez un PIN que vous seul connaissez. Ne le partagez avec personne.</div>
+      </div>
+      <!-- Étape 2 : confirmer PIN -->
+      <div class="pin-step" id="cpStep2">
+        <div class="pin-step-label">Confirmez votre nouveau PIN</div>
+        <div class="pin-display confirm-dots" id="cpDots2">
+          <div class="pin-display-dot" id="cpd2-0"></div><div class="pin-display-dot" id="cpd2-1"></div>
+          <div class="pin-display-dot" id="cpd2-2"></div><div class="pin-display-dot" id="cpd2-3"></div>
+        </div>
+        <div class="keypad">
+          <div class="kkey" onclick="cpKey('1',2)">1</div><div class="kkey" onclick="cpKey('2',2)">2</div><div class="kkey" onclick="cpKey('3',2)">3</div>
+          <div class="kkey" onclick="cpKey('4',2)">4</div><div class="kkey" onclick="cpKey('5',2)">5</div><div class="kkey" onclick="cpKey('6',2)">6</div>
+          <div class="kkey" onclick="cpKey('7',2)">7</div><div class="kkey" onclick="cpKey('8',2)">8</div><div class="kkey" onclick="cpKey('9',2)">9</div>
+          <div class="kkey" style="visibility:hidden"></div><div class="kkey" onclick="cpKey('0',2)">0</div><div class="kkey del" onclick="cpDel(2)">⌫</div>
+        </div>
+        <div class="pin-err" id="cpErr" style="margin-top:8px">❌ Les deux PIN ne correspondent pas. Recommencez.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODAL RÉCUPÉRATION COMPTE (admin) ── -->
+<div class="modal-overlay" id="mRecovery">
+  <div class="modal">
+    <div class="modal-head"><div class="modal-title">🔑 Récupération de compte</div><button class="btn-icon" onclick="cm('mRecovery')">✕</button></div>
+    <div class="modal-body">
+      <div class="recovery-info">
+        <strong>👤 Utilisateur : <span id="recoveryUserName">—</span></strong>
+        En tant qu'administrateur, vous pouvez réinitialiser le PIN de cet utilisateur à <strong>0000</strong>. Il devra le changer à sa prochaine connexion.
+      </div>
+      <div class="alert alert-amber" style="font-size:12px">
+        ⚠️ <strong>Aucune donnée ne sera perdue.</strong> Seul le PIN est réinitialisé. L'utilisateur retrouvera toutes ses données intactes.
+      </div>
+      <div class="multi-machine-note" style="margin-top:10px">
+        <strong>ℹ️ Note multi-appareils :</strong> Dans la version complète (avec serveur en ligne), la réinitialisation sera effective sur tous les appareils instantanément. En mode démo local, elle s'applique sur cet appareil uniquement.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" onclick="cm('mRecovery')">Annuler</button>
+      <button class="btn btn-amber" onclick="doRecovery()">🔄 Réinitialiser le PIN à 0000</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toasts -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+// ══════════════════════════════════
+// DATA
+// ══════════════════════════════════
+// ── DONNÉES DÉMO PAR TYPE DE COMMERCE ──
+const DEMO_DATA = {
+  epicerie: {
+    products:[
+      {id:1,nom:'Riz parfumé 25kg',cat:'Alimentation',unit:'Sac',achat:180000,vente:220000,qte:45,seuil:10,emoji:'🌾',fourn:'Grossiste Madina'},
+      {id:2,nom:'Huile végétale 5L',cat:'Alimentation',unit:'Bidon',achat:65000,vente:80000,qte:30,seuil:8,emoji:'🫙',fourn:'Grossiste Madina'},
+      {id:3,nom:'Sucre cristallisé 1kg',cat:'Alimentation',unit:'Kg',achat:15000,vente:18000,qte:60,seuil:15,emoji:'🍬',fourn:'Marché central'},
+      {id:4,nom:'Farine de blé 50kg',cat:'Alimentation',unit:'Sac',achat:280000,vente:320000,qte:8,seuil:5,emoji:'🌾',fourn:'Grossiste Madina'},
+      {id:5,nom:'Lait Nido 400g',cat:'Alimentation',unit:'Boîte',achat:28000,vente:35000,qte:3,seuil:10,emoji:'🥛',fourn:'Grossiste Kaloum'},
+      {id:6,nom:'Savon OMO 1kg',cat:'Hygiène',unit:'Boîte',achat:18000,vente:22000,qte:25,seuil:8,emoji:'🧼',fourn:'Marché Madina'},
+      {id:7,nom:'Eau minérale 1.5L',cat:'Boissons',unit:'Bouteille',achat:8000,vente:10000,qte:2,seuil:12,emoji:'💧',fourn:'Société des eaux'},
+      {id:8,nom:'Biscuit Glucose',cat:'Alimentation',unit:'Paquet',achat:5000,vente:7000,qte:40,seuil:20,emoji:'🍪',fourn:'Grossiste Kaloum'},
+      {id:9,nom:'Thé Lipton boîte',cat:'Boissons',unit:'Boîte',achat:25000,vente:30000,qte:15,seuil:5,emoji:'🍵',fourn:'Marché central'},
+      {id:10,nom:'Tomate concentrée',cat:'Alimentation',unit:'Boîte',achat:6000,vente:8000,qte:50,seuil:15,emoji:'🍅',fourn:'Grossiste Madina'},
+      {id:11,nom:'Sardines en boîte',cat:'Alimentation',unit:'Boîte',achat:12000,vente:15000,qte:0,seuil:10,emoji:'🐟',fourn:'Grossiste port'},
+      {id:12,nom:'Cube Maggi carton',cat:'Alimentation',unit:'Carton',achat:45000,vente:55000,qte:20,seuil:5,emoji:'🧂',fourn:'Grossiste Madina'},
+    ],
+    sales:[
+      {id:101,date:'2025-01-15 09:42',items:[{nom:'Riz parfumé 25kg',qte:1,prix:220000},{nom:'Huile végétale 5L',qte:2,prix:80000}],total:380000,pay:'especes',caissier:'Kofi Koly',disc:0},
+      {id:102,date:'2025-01-15 11:15',items:[{nom:'Biscuit Glucose',qte:3,prix:7000},{nom:'Thé Lipton boîte',qte:1,prix:30000}],total:51000,pay:'mobile',caissier:'Aissatou D.',disc:0},
+      {id:103,date:'2025-01-15 13:30',items:[{nom:'Sucre cristallisé 1kg',qte:5,prix:18000}],total:90000,pay:'especes',caissier:'Kofi Koly',disc:0},
+    ],
+    credits:[{id:1,client:'Fatoumata Baldé',montant:55000,date:'2025-01-14',produits:'Huile 5L + Sucre 3kg'},{id:2,client:'Ibrahima Sow',montant:95000,date:'2025-01-12',produits:'Riz 25kg'}],
+    suppls:[{id:1,nom:'Grossiste Madina',tel:'+224 622 11 22 33',produits:'Riz, huile, farine',delai:'1-2 jours'},{id:2,nom:'Marché central',tel:'+224 628 44 55 66',produits:'Sucre, sel, épices',delai:'Immédiat'},{id:3,nom:'Société des eaux',tel:'+224 631 77 88 99',produits:'Eau minérale, sodas',delai:'3-5 jours'}],
+  },
+  electronique: {
+    products:[
+      {id:1,nom:'Samsung Galaxy A15',cat:'Électronique',unit:'Pièce',achat:1800000,vente:2200000,qte:8,seuil:2,emoji:'📱',fourn:'Distributeur Samsung GN'},
+      {id:2,nom:'Tecno Spark 20',cat:'Électronique',unit:'Pièce',achat:1200000,vente:1500000,qte:12,seuil:3,emoji:'📱',fourn:'Distributeur Tecno'},
+      {id:3,nom:'iPhone 14 reconditionné',cat:'Électronique',unit:'Pièce',achat:5500000,vente:7000000,qte:3,seuil:1,emoji:'📱',fourn:'Import Dubaï'},
+      {id:4,nom:'Chargeur USB-C 65W',cat:'Électronique',unit:'Pièce',achat:80000,vente:120000,qte:30,seuil:10,emoji:'🔌',fourn:'Grossiste électronique'},
+      {id:5,nom:'Câble USB-C 1m',cat:'Électronique',unit:'Pièce',achat:25000,vente:40000,qte:50,seuil:15,emoji:'🔋',fourn:'Grossiste électronique'},
+      {id:6,nom:'Câble Lightning iPhone',cat:'Électronique',unit:'Pièce',achat:30000,vente:50000,qte:35,seuil:10,emoji:'⚡',fourn:'Grossiste électronique'},
+      {id:7,nom:'Laptop HP 15" i5',cat:'Électronique',unit:'Pièce',achat:5800000,vente:7200000,qte:4,seuil:1,emoji:'💻',fourn:'Import HP Guinée'},
+      {id:8,nom:'Laptop Lenovo IdeaPad',cat:'Électronique',unit:'Pièce',achat:4500000,vente:5800000,qte:6,seuil:2,emoji:'💻',fourn:'Import Lenovo'},
+      {id:9,nom:'Disque dur externe 1To',cat:'Électronique',unit:'Pièce',achat:350000,vente:500000,qte:10,seuil:3,emoji:'💾',fourn:'Grossiste électronique'},
+      {id:10,nom:'Clé USB 64Go',cat:'Électronique',unit:'Pièce',achat:60000,vente:90000,qte:40,seuil:10,emoji:'💾',fourn:'Grossiste électronique'},
+      {id:11,nom:'Écouteurs Bluetooth',cat:'Électronique',unit:'Pièce',achat:120000,vente:180000,qte:15,seuil:5,emoji:'🎧',fourn:'Import Chine'},
+      {id:12,nom:'Chargeur voiture USB',cat:'Électronique',unit:'Pièce',achat:40000,vente:65000,qte:0,seuil:10,emoji:'🔌',fourn:'Grossiste électronique'},
+    ],
+    sales:[
+      {id:101,date:'2025-01-15 10:15',items:[{nom:'Samsung Galaxy A15',qte:1,prix:2200000},{nom:'Câble USB-C 1m',qte:2,prix:40000}],total:2280000,pay:'especes',caissier:'Kofi Koly',disc:0},
+      {id:102,date:'2025-01-15 12:30',items:[{nom:'Chargeur USB-C 65W',qte:3,prix:120000},{nom:'Clé USB 64Go',qte:2,prix:90000}],total:540000,pay:'mobile',caissier:'Aissatou D.',disc:20000},
+      {id:103,date:'2025-01-14 14:00',items:[{nom:'Laptop HP 15" i5',qte:1,prix:7200000}],total:7200000,pay:'credit',caissier:'Kofi Koly',disc:0},
+    ],
+    credits:[{id:1,client:'Mamadou Barry',montant:7200000,date:'2025-01-14',produits:'Laptop HP 15" i5'},{id:2,client:'Aissatou Diallo',montant:1500000,date:'2025-01-10',produits:'Tecno Spark 20'}],
+    suppls:[{id:1,nom:'Distributeur Samsung GN',tel:'+224 625 10 20 30',produits:'Samsung, accessoires',delai:'3-5 jours'},{id:2,nom:'Import HP Guinée',tel:'+224 622 40 50 60',produits:'Laptops HP, Lenovo',delai:'1 semaine+'},{id:3,nom:'Grossiste électronique',tel:'+224 628 70 80 90',produits:'Câbles, chargeurs, clés USB',delai:'1-2 jours'}],
+  },
+  textile: {
+    products:[
+      {id:1,nom:'Pagne wax 6m (Holland)',cat:'Textile',unit:'Pièce',achat:180000,vente:250000,qte:20,seuil:5,emoji:'👘',fourn:'Grossiste tissus Madina'},
+      {id:2,nom:'Pagne bazin riche 5m',cat:'Textile',unit:'Pièce',achat:120000,vente:170000,qte:15,seuil:4,emoji:'👘',fourn:'Marché Madina'},
+      {id:3,nom:'Pagne bogolan 4m',cat:'Textile',unit:'Pièce',achat:60000,vente:90000,qte:30,seuil:8,emoji:'🎨',fourn:'Artisans locaux'},
+      {id:4,nom:'Chemise homme (M/L/XL)',cat:'Textile',unit:'Pièce',achat:45000,vente:70000,qte:25,seuil:8,emoji:'👔',fourn:'Import Maroc'},
+      {id:5,nom:'Robe femme africaine',cat:'Textile',unit:'Pièce',achat:65000,vente:100000,qte:18,seuil:5,emoji:'👗',fourn:'Couturière locale'},
+      {id:6,nom:'Jeans homme 501',cat:'Textile',unit:'Pièce',achat:80000,vente:130000,qte:12,seuil:4,emoji:'👖',fourn:'Import Turquie'},
+      {id:7,nom:'Boubou grand complet',cat:'Textile',unit:'Pièce',achat:150000,vente:220000,qte:8,seuil:2,emoji:'🥻',fourn:'Grossiste tissus Madina'},
+      {id:8,nom:'Fil à coudre (boîte 12)',cat:'Textile',unit:'Boîte',achat:15000,vente:25000,qte:40,seuil:10,emoji:'🧵',fourn:'Marché Madina'},
+      {id:9,nom:'Hijab soie (couleurs)',cat:'Textile',unit:'Pièce',achat:30000,vente:50000,qte:35,seuil:10,emoji:'🧕',fourn:'Import Dubaï'},
+      {id:10,nom:'Chaussures homme cuir',cat:'Textile',unit:'Paire',achat:120000,vente:180000,qte:10,seuil:3,emoji:'👞',fourn:'Import Maroc'},
+      {id:11,nom:'Sac à main femme',cat:'Textile',unit:'Pièce',achat:80000,vente:130000,qte:15,seuil:4,emoji:'👜',fourn:'Import Chine'},
+      {id:12,nom:'Ceinture cuir homme',cat:'Textile',unit:'Pièce',achat:25000,vente:45000,qte:0,seuil:8,emoji:'👗',fourn:'Import Maroc'},
+    ],
+    sales:[
+      {id:101,date:'2025-01-15 10:00',items:[{nom:'Pagne wax 6m (Holland)',qte:2,prix:250000},{nom:'Fil à coudre (boîte 12)',qte:1,prix:25000}],total:525000,pay:'especes',caissier:'Kofi Koly',disc:0},
+      {id:102,date:'2025-01-15 13:20',items:[{nom:'Hijab soie (couleurs)',qte:3,prix:50000}],total:150000,pay:'mobile',caissier:'Aissatou D.',disc:0},
+      {id:103,date:'2025-01-14 11:00',items:[{nom:'Boubou grand complet',qte:1,prix:220000},{nom:'Chaussures homme cuir',qte:1,prix:180000}],total:400000,pay:'especes',caissier:'Kofi Koly',disc:20000},
+    ],
+    credits:[{id:1,client:'Mariama Touré',montant:250000,date:'2025-01-13',produits:'Pagne wax Holland ×2'},{id:2,client:'Kadiatou Bah',montant:170000,date:'2025-01-11',produits:'Pagne bazin riche'}],
+    suppls:[{id:1,nom:'Grossiste tissus Madina',tel:'+224 622 11 22 33',produits:'Pagnes wax, bazin, bogolan',delai:'Immédiat'},{id:2,nom:'Import Maroc',tel:'+224 628 44 55 66',produits:'Chemises, chaussures, ceintures',delai:'1 semaine+'},{id:3,nom:'Artisans locaux',tel:'+224 631 77 88 99',produits:'Bogolan, broderies',delai:'3-5 jours'}],
+  },
+  pharmacie: {
+    products:[
+      {id:1,nom:'Paracétamol 500mg (boîte 16)',cat:'Médicaments',unit:'Boîte',achat:8000,vente:12000,qte:80,seuil:20,emoji:'💊',fourn:'Grossiste pharma'},
+      {id:2,nom:'Amoxicilline 500mg (boîte 12)',cat:'Médicaments',unit:'Boîte',achat:15000,vente:22000,qte:50,seuil:15,emoji:'💊',fourn:'Grossiste pharma'},
+      {id:3,nom:'Quinine 300mg injection',cat:'Médicaments',unit:'Ampoule',achat:5000,vente:8000,qte:30,seuil:10,emoji:'💉',fourn:'Labo GN'},
+      {id:4,nom:'Nivaquine 100mg (boîte 30)',cat:'Médicaments',unit:'Boîte',achat:12000,vente:18000,qte:40,seuil:12,emoji:'💊',fourn:'Grossiste pharma'},
+      {id:5,nom:'Coartem (antipaludéen)',cat:'Médicaments',unit:'Boîte',achat:18000,vente:25000,qte:3,seuil:10,emoji:'💊',fourn:'Labo GN'},
+      {id:6,nom:'Sérum physiologique 500ml',cat:'Médical',unit:'Flacon',achat:10000,vente:15000,qte:25,seuil:8,emoji:'🧴',fourn:'Labo GN'},
+      {id:7,nom:'Gants latex (boîte 100)',cat:'Médical',unit:'Boîte',achat:35000,vente:50000,qte:20,seuil:5,emoji:'🧤',fourn:'Grossiste médical'},
+      {id:8,nom:'Vitamines C 500mg',cat:'Compléments',unit:'Boîte',achat:10000,vente:16000,qte:60,seuil:15,emoji:'🍊',fourn:'Grossiste pharma'},
+      {id:9,nom:'Ibuprofène 400mg',cat:'Médicaments',unit:'Boîte',achat:9000,vente:14000,qte:45,seuil:15,emoji:'💊',fourn:'Grossiste pharma'},
+      {id:10,nom:'Solution antiseptique 1L',cat:'Hygiène',unit:'Flacon',achat:18000,vente:28000,qte:30,seuil:8,emoji:'🧴',fourn:'Grossiste médical'},
+      {id:11,nom:'Thermomètre digital',cat:'Médical',unit:'Pièce',achat:45000,vente:70000,qte:10,seuil:3,emoji:'🌡️',fourn:'Grossiste médical'},
+      {id:12,nom:'Moustiquaire imprégnée',cat:'Prévention',unit:'Pièce',achat:25000,vente:40000,qte:0,seuil:10,emoji:'🦟',fourn:'Santé Publique GN'},
+    ],
+    sales:[
+      {id:101,date:'2025-01-15 09:00',items:[{nom:'Paracétamol 500mg (boîte 16)',qte:2,prix:12000},{nom:'Coartem (antipaludéen)',qte:1,prix:25000}],total:49000,pay:'especes',caissier:'Kofi Koly',disc:0},
+      {id:102,date:'2025-01-15 10:30',items:[{nom:'Amoxicilline 500mg (boîte 12)',qte:1,prix:22000},{nom:'Vitamines C 500mg',qte:2,prix:16000}],total:54000,pay:'mobile',caissier:'Aissatou D.',disc:0},
+      {id:103,date:'2025-01-15 11:45',items:[{nom:'Gants latex (boîte 100)',qte:1,prix:50000},{nom:'Sérum physiologique 500ml',qte:2,prix:15000}],total:80000,pay:'especes',caissier:'Kofi Koly',disc:0},
+    ],
+    credits:[{id:1,client:'Clinique Espoir',montant:180000,date:'2025-01-14',produits:'Gants latex ×3 + Sérum ×4'},{id:2,client:'Ibrahima Diallo',montant:49000,date:'2025-01-12',produits:'Paracétamol + Coartem'}],
+    suppls:[{id:1,nom:'Grossiste pharma Conakry',tel:'+224 622 11 22 33',produits:'Médicaments génériques',delai:'1-2 jours'},{id:2,nom:'Laboratoire GN',tel:'+224 628 44 55 66',produits:'Injectables, sérums',delai:'3-5 jours'},{id:3,nom:'Grossiste médical',tel:'+224 631 77 88 99',produits:'Matériel médical, gants',delai:'2-3 jours'}],
+  },
+  autre: {
+    products:[
+      {id:1,nom:'Cahier 100 pages',cat:'Papeterie',unit:'Pièce',achat:8000,vente:12000,qte:100,seuil:20,emoji:'📓',fourn:'Librairie centrale'},
+      {id:2,nom:'Stylo bille (boîte 50)',cat:'Papeterie',unit:'Boîte',achat:30000,vente:45000,qte:20,seuil:5,emoji:'✏️',fourn:'Librairie centrale'},
+      {id:3,nom:'Rame papier A4 (500f)',cat:'Papeterie',unit:'Rame',achat:80000,vente:110000,qte:15,seuil:4,emoji:'📄',fourn:'Import papier'},
+      {id:4,nom:'Cartouche imprimante HP',cat:'Électronique',unit:'Pièce',achat:120000,vente:180000,qte:8,seuil:2,emoji:'🖨️',fourn:'Distributeur HP'},
+      {id:5,nom:'Classeur bureau A4',cat:'Papeterie',unit:'Pièce',achat:20000,vente:32000,qte:30,seuil:8,emoji:'📁',fourn:'Librairie centrale'},
+      {id:6,nom:'Calculatrice scientifique',cat:'Électronique',unit:'Pièce',achat:80000,vente:120000,qte:12,seuil:3,emoji:'🔢',fourn:'Grossiste électronique'},
+      {id:7,nom:'Table bureau simple',cat:'Mobilier',unit:'Pièce',achat:350000,vente:500000,qte:5,seuil:1,emoji:'🪑',fourn:'Menuiserie locale'},
+      {id:8,nom:'Chaise bureau réglable',cat:'Mobilier',unit:'Pièce',achat:250000,vente:380000,qte:8,seuil:2,emoji:'🪑',fourn:'Import Chine'},
+      {id:9,nom:'Tableau blanc 120×90',cat:'Mobilier',unit:'Pièce',achat:180000,vente:280000,qte:4,seuil:1,emoji:'🟦',fourn:'Import Chine'},
+      {id:10,nom:'Marqueur tableau (boîte)',cat:'Papeterie',unit:'Boîte',achat:20000,vente:35000,qte:25,seuil:8,emoji:'🖊️',fourn:'Librairie centrale'},
+      {id:11,nom:'Agrafeuse bureau',cat:'Papeterie',unit:'Pièce',achat:35000,vente:55000,qte:10,seuil:3,emoji:'📎',fourn:'Librairie centrale'},
+      {id:12,nom:'Lampe de bureau LED',cat:'Électronique',unit:'Pièce',achat:60000,vente:95000,qte:0,seuil:5,emoji:'💡',fourn:'Grossiste électronique'},
+    ],
+    sales:[
+      {id:101,date:'2025-01-15 09:30',items:[{nom:'Cahier 100 pages',qte:10,prix:12000},{nom:'Stylo bille (boîte 50)',qte:1,prix:45000}],total:165000,pay:'especes',caissier:'Kofi Koly',disc:0},
+      {id:102,date:'2025-01-15 11:00',items:[{nom:'Rame papier A4 (500f)',qte:2,prix:110000}],total:220000,pay:'mobile',caissier:'Aissatou D.',disc:0},
+      {id:103,date:'2025-01-14 15:00',items:[{nom:'Table bureau simple',qte:1,prix:500000},{nom:'Chaise bureau réglable',qte:2,prix:380000}],total:1260000,pay:'credit',caissier:'Kofi Koly',disc:0},
+    ],
+    credits:[{id:1,client:'École Sainte Marie',montant:1260000,date:'2025-01-14',produits:'Tables + Chaises bureau'},{id:2,client:'Bureau Préfecture',montant:220000,date:'2025-01-12',produits:'Rames papier A4'}],
+    suppls:[{id:1,nom:'Librairie centrale',tel:'+224 622 11 22 33',produits:'Papeterie complète',delai:'Immédiat'},{id:2,nom:'Import Chine',tel:'+224 628 44 55 66',produits:'Mobilier, chaises',delai:'1 semaine+'},{id:3,nom:'Menuiserie locale',tel:'+224 631 77 88 99',produits:'Tables sur mesure',delai:'3-5 jours'}],
+  },
+};
+// Alias pour compatibilité
+const DEMO_PRODUCTS = DEMO_DATA.epicerie.products;
+const DEMO_SALES = DEMO_DATA.epicerie.sales;
+const DEMO_CREDITS = DEMO_DATA.epicerie.credits;
+const DEMO_SUPPL = DEMO_DATA.epicerie.suppls;
+
+let prods=[],sales=[],credits=[],suppls=[],users=[];
+let cart=[],selPay_='especes',currentUser=null,credPayId=null,curPer='today';
+let lang='fr';
+
+// TRIAL
+let trialDays=14, trialExpired=false;
+
+// PLANS
+const PLANS=[
+  {id:'week',label:'Hebdomadaire',price:25000,period:'7 jours'},
+  {id:'month',label:'Mensuel',price:80000,period:'30 jours',popular:true},
+  {id:'sem',label:'Semestriel',price:400000,period:'6 mois',economy:'Économie 33%'},
+  {id:'year',label:'Annuel',price:700000,period:'12 mois',economy:'Économie 27%'},
+];
+let selPlan='month';
+
+// ══════════════════════════════════
+// SETUP
+// ══════════════════════════════════
+let setupStep=1; let bizType='epicerie';
+function selBiz(el,t){bizType=t;document.querySelectorAll('.biz-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel')}
+function setupNext(){
+  if(setupStep===1){
+    const n=document.getElementById('sn').value.trim();
+    const p=document.getElementById('sp').value.trim();
+    if(!n){fe('sn','Nom obligatoire');return}
+    if(p&&!/^[+\d][\d\s]{6,14}$/.test(p)){fe('sp','Format invalide (ex: +224 620 00 00 00)');return}
+    ce('sn');ce('sp');
+  }
+  if(setupStep===3){
+    const n=document.getElementById('on').value.trim();
+    const pin=document.getElementById('opin').value.trim();
+    if(!n){fe('on','Nom obligatoire');return}
+    if(!pin||!/^\d{4}$/.test(pin)){fe('opin','Exactement 4 chiffres requis');return}
+    finishSetup();return;
+  }
+  setupStep++;updateSetup();
+}
+function setupPrev(){if(setupStep>1){setupStep--;updateSetup();}}
+function updateSetup(){
+  for(let i=1;i<=3;i++){
+    document.getElementById('ss'+i).classList.toggle('on',i===setupStep);
+    document.getElementById('sd'+i).classList.toggle('on',i<=setupStep);
+  }
+  document.getElementById('setup-back').style.display=setupStep>1?'block':'none';
+  document.getElementById('setup-next').textContent=setupStep===3?'✅ Lancer GestStock':'Suivant →';
+}
+function finishSetup(){
+  const sName=document.getElementById('sn').value.trim();
+  const oName=document.getElementById('on').value.trim();
+  const oPin=document.getElementById('opin').value.trim();
+  const loadDemo=document.getElementById('sdemo').value==='yes';
+  document.getElementById('shopNameDisplay').textContent=sName;
+  document.getElementById('pShopName').value=sName;
+  users=[{nom:oName,role:'Propriétaire',pin:oPin,acces:'Tout accès',actif:true,mustChange:false}];
+  if(loadDemo){
+    const d=DEMO_DATA[bizType]||DEMO_DATA.epicerie;
+    prods=JSON.parse(JSON.stringify(d.products));
+    sales=JSON.parse(JSON.stringify(d.sales));
+    credits=JSON.parse(JSON.stringify(d.credits));
+    suppls=JSON.parse(JSON.stringify(d.suppls));
+  } else {prods=[];sales=[];credits=[];suppls=[];}
+  document.getElementById('setupOverlay').classList.add('hidden');
+  renderTrialBanner();
+  openLogin();
+  toast('Boutique "'+sName+'" configurée ✓','success');
+}
+
+// ══════════════════════════════════
+// LOGIN
+// ══════════════════════════════════
+let pinStr='';let loginUser=null;
+function openLogin(){
+  document.getElementById('loginOverlay').classList.remove('hidden');
+  pinStr='';loginUser=null;
+  document.getElementById('pinSec').style.display='none';
+  renderUserList();
+}
+function renderUserList(){
+  const avColors=['blue','amber','green'];
+  const activeUsers=users.filter(u=>u.actif);
+  if(activeUsers.length===0){
+    document.getElementById('userList').innerHTML=`
+      <div style="text-align:center;padding:24px 16px">
+        <div style="font-size:36px;margin-bottom:10px">🔒</div>
+        <div style="font-size:14px;font-weight:700;color:var(--gray-700);margin-bottom:6px">Aucun compte actif</div>
+        <div style="font-size:12px;color:var(--gray-500)">Tous les comptes ont été désactivés.<br>Contactez le propriétaire de la boutique.</div>
+      </div>`;
+    document.getElementById('pinSec').style.display='none';
+    return;
+  }
+  document.getElementById('userList').innerHTML=activeUsers.map((u,i)=>`
+    <div class="u-card" onclick="selUser(${i})" id="uc${i}">
+      <div class="u-av u-av-${avColors[i%3]}">${u.nom.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase()}</div>
+      <div style="flex:1">
+        <div class="u-name">${u.nom}</div>
+        <div class="u-role-text"><span class="badge badge-blue">${u.role}</span></div>
+      </div>
+      <div style="font-size:10px;color:var(--gray-400)">${u.mustChange?'⚠️ PIN initial':'✓ Compte actif'}</div>
+    </div>`).join('');
+}
+function selUser(i){
+  const active=users.filter(u=>u.actif);
+  loginUser=active[i];
+  document.querySelectorAll('.u-card').forEach((c,j)=>c.classList.toggle('sel',j===i));
+  pinStr='';updPinDots();
+  document.getElementById('pinErr').style.display='none';
+  document.getElementById('pinLabel').textContent='PIN pour '+loginUser.nom+' :';
+  document.getElementById('pinSec').style.display='block';
+}
+function pk(d){if(pinStr.length>=4)return;pinStr+=d;updPinDots();if(pinStr.length===4)setTimeout(checkPin,200);}
+function pkDel(){pinStr=pinStr.slice(0,-1);updPinDots();document.getElementById('pinErr').style.display='none';}
+function pinCancel(){pinStr='';loginUser=null;document.getElementById('pinSec').style.display='none';document.querySelectorAll('.u-card').forEach(c=>c.classList.remove('sel'));updPinDots();}
+function updPinDots(){for(let i=0;i<4;i++)document.getElementById('pd'+i).classList.toggle('on',i<pinStr.length);}
+function checkPin(){
+  if(!loginUser)return;
+  if(pinStr===(loginUser.pin||'0000')){
+    currentUser=loginUser;
+    document.getElementById('loginOverlay').classList.add('hidden');
+    // PIN initial 0000 ou flag mustChange → forcer le changement
+    if(loginUser.mustChange || loginUser.pin==='0000'){
+      setTimeout(()=>openChangePIN(),300);
+      return;
+    }
+    connectUser();
+  } else {
+    document.getElementById('pinErr').style.display='block';
+    pinStr='';updPinDots();
+  }
+}
+function connectUser(){
+  applyRole();
+  const chip=document.getElementById('userChip');chip.style.display='flex';
+  document.getElementById('chipAv').textContent=currentUser.nom.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('chipName').textContent=currentUser.nom.split(' ')[0];
+  document.getElementById('chipRole').textContent=currentUser.role;
+  toast('Connecté — '+currentUser.nom,'success');
+  renderAll();
+}
+function applyRole(){
+  if(!currentUser)return;
+  const role=currentUser.role;
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+    const txt=b.getAttribute('onclick')||'';
+    if(role==='Caissier'){const ok=['dashboard','vente'].some(p=>txt.includes("'"+p+"'"));b.style.opacity=ok?'1':'.3';b.style.pointerEvents=ok?'auto':'none';}
+    else if(role==='Gérant'){const bl=['users'].some(p=>txt.includes("'"+p+"'"));b.style.opacity=bl?'.3':'1';b.style.pointerEvents=bl?'none':'auto';}
+    else{b.style.opacity='1';b.style.pointerEvents='auto';}
+  });
+}
+
+// ══════════════════════════════════
+// TRIAL & SUBSCRIPTION
+// ══════════════════════════════════
+function renderTrialBanner(){
+  if(trialExpired){document.getElementById('trialBanner').style.display='flex';document.getElementById('trialMsg').textContent='Votre essai est terminé.';document.getElementById('trialSub').textContent='Souscrivez pour continuer à utiliser GestStock.';return;}
+  document.getElementById('trialBanner').style.display='flex';
+  document.getElementById('trialMsg').textContent='Période d\'essai gratuite';
+  document.getElementById('trialSub').textContent=`Il vous reste ${trialDays} jour(s) — profitez de toutes les fonctionnalités.`;
+}
+function openSub(){
+  renderSubPlans();
+  document.getElementById('subOverlay').classList.add('open');
+}
+function renderSubPlans(){
+  document.getElementById('subPlans').innerHTML=PLANS.map(p=>`
+    <div class="plan-card ${p.popular?'popular':''} ${selPlan===p.id?'sel':''}" onclick="selPlanCard('${p.id}',this)">
+      <div class="plan-name">${p.label}</div>
+      <div class="plan-price">${p.price.toLocaleString()} GNF</div>
+      <div class="plan-period">${p.period}</div>
+      ${p.economy?`<div class="plan-economy">✓ ${p.economy}</div>`:''}
+    </div>`).join('');
+}
+function selPlanCard(id,el){selPlan=id;document.querySelectorAll('.plan-card').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+function activateSub(){
+  const ref=document.getElementById('omRef').value.trim();
+  if(!ref){toast('Entrez la référence de transaction Orange Money','error');return;}
+  const plan=PLANS.find(p=>p.id===selPlan);
+  toast(`Abonnement ${plan.label} activé ✓ — Référence : ${ref}`,'success');
+  trialExpired=false;trialDays=plan.id==='week'?7:plan.id==='month'?30:plan.id==='sem'?180:365;
+  document.getElementById('subOverlay').classList.remove('open');
+  renderTrialBanner();
+}
+
+// ══════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════
+const pageTitles={dashboard:'Tableau de bord',vente:'Nouvelle vente',stock:'Stock & Produits',fournisseurs:'Fournisseurs',credit:'Crédit clients',rapport:'Rapports',historique:'Historique des ventes',users:'Utilisateurs',parametres:'Paramètres'};
+const pageActions={
+  stock:`<button class="btn btn-primary btn-sm" onclick="om('mProd');document.getElementById('epid').value='';document.getElementById('mProdTitle').textContent='Ajouter un produit'">+ Produit</button>`,
+  fournisseurs:`<button class="btn btn-primary btn-sm" onclick="om('mSuppl')">+ Fournisseur</button>`,
+  users:`<button class="btn btn-primary btn-sm" onclick="om('mUser')">+ Utilisateur</button>`,
+};
+function go(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  document.getElementById('pageTitle').textContent=pageTitles[id]||id;
+  document.getElementById('subheaderActions').innerHTML=pageActions[id]||'';
+  renderAll();
+}
+
+// ══════════════════════════════════
+// RENDER
+// ══════════════════════════════════
+function renderAll(){renderDash();renderProd();renderStock();renderSuppl();renderCredits();renderRap();renderHist();renderUsers();}
+
+function renderDash(){
+  const tod=sales.filter(s=>s.date.startsWith('2025-01-15'));
+  const todCA=tod.reduce((a,s)=>a+s.total,0);
+  document.getElementById('kv1').textContent=fmt(todCA);
+  document.getElementById('ks1').textContent=tod.length+' transaction(s)';
+  document.getElementById('kv2').textContent=prods.length;
+  const alerts=prods.filter(p=>p.qte<=p.seuil);
+  document.getElementById('kv3').textContent=alerts.length;
+  const badge=document.getElementById('alertBadge');
+  if(alerts.length>0){badge.textContent=alerts.length;badge.style.display='flex';}else{badge.style.display='none';}
+  const totCred=credits.reduce((a,c)=>a+c.montant,0);
+  document.getElementById('kv4').textContent=fmt(totCred);
+  document.getElementById('dashAlerts').innerHTML=alerts.length===0
+    ?'<div class="empty" style="padding:20px"><div class="empty-icon">✅</div><div class="empty-title">Aucune alerte</div></div>'
+    :alerts.slice(0,5).map(p=>`<div class="alert ${p.qte===0?'alert-red':'alert-amber'}"><span>${p.emoji}</span><span><strong>${p.nom}</strong> — ${p.qte===0?'Épuisé':'Plus que '+p.qte+' '+p.unit}</span></div>`).join('');
+  const ic={};sales.forEach(s=>s.items.forEach(it=>{ic[it.nom]=(ic[it.nom]||0)+it.qte;}));
+  const top=Object.entries(ic).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  document.getElementById('dashTop').innerHTML=top.length===0
+    ?'<div class="empty" style="padding:20px"><div class="empty-title">Aucune vente encore</div></div>'
+    :top.map(([n,q],i)=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--gray-100)"><span style="background:var(--blue-700);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0">${i+1}</span><span style="flex:1;font-size:13px">${n}</span><span class="badge badge-blue">${q} vendus</span></div>`).join('');
+}
+
+function renderProd(){
+  const q=(document.getElementById('posSearch')||{value:''}).value.toLowerCase().trim();
+  const all=prods.filter(p=>p.nom.toLowerCase().includes(q));
+  const inStock=all.filter(p=>p.qte>0);
+  const outStock=all.filter(p=>p.qte===0);
+  const grid=document.getElementById('prodGrid');if(!grid)return;
+  if(q&&all.length===0){
+    grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">🔍</div><div class="empty-title">"${q}" introuvable</div><div class="empty-sub">Ce produit n'existe pas encore dans votre stock.</div><button class="btn btn-primary btn-sm" onclick="prefillProd('${q.replace(/'/g,"\\'")}')">+ Ajouter ce produit</button></div>`;return;
+  }
+  if(q&&all.length>0&&inStock.length===0){
+    grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📭</div><div class="empty-title">"${q}" est épuisé</div><div class="empty-sub">${outStock.length} produit(s) trouvé(s) mais aucun en stock.</div><button class="btn btn-amber btn-sm" onclick="restock(${outStock[0].id})">➕ Réapprovisionner</button></div>`;return;
+  }
+  if(!q&&prods.length===0){
+    grid.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📦</div><div class="empty-title">Aucun produit</div><div class="empty-sub">Ajoutez vos produits dans Stock & Produits.</div><button class="btn btn-primary btn-sm" onclick="go('stock')">Gérer le stock</button></div>`;return;
+  }
+  grid.innerHTML=all.map(p=>`<div class="prod-card ${p.qte===0?'out':''}" onclick="${p.qte>0?'addCart('+p.id+')':''}">
+    <div class="prod-emoji">${p.emoji}</div>
+    <div class="prod-name">${p.nom}</div>
+    <div class="prod-price">${fmt(p.vente)}</div>
+    <div class="prod-stock" style="color:${p.qte===0?'var(--red)':p.qte<=p.seuil?'var(--amber)':'var(--gray-400)'}">${p.qte===0?'Épuisé':p.qte<=p.seuil?'⚠️ '+p.qte+' '+p.unit:p.qte+' '+p.unit}</div>
+  </div>`).join('');
+}
+function prefillProd(n){go('stock');setTimeout(()=>{document.getElementById('pNom').value=n;om('mProd');},200);}
+function restock(id){const p=prods.find(x=>x.id===id);const q=prompt('Quantité à ajouter pour '+p.nom+' :');if(!q||isNaN(q)||parseInt(q)<=0)return;p.qte+=parseInt(q);toast(p.nom+' : +'+q+' '+p.unit,'success');renderAll();}
+
+function addCart(id){
+  const p=prods.find(x=>x.id===id);
+  const ex=cart.find(x=>x.id===id);
+  if(ex){if(ex.qte<p.qte)ex.qte++;}else{cart.push({id:p.id,nom:p.nom,prix:p.vente,qte:1,max:p.qte});}
+  renderCart();
+}
+function renderCart(){
+  const d=document.getElementById('cartItems');if(!d)return;
+  if(cart.length===0){d.innerHTML='<div class="cart-empty"><div class="cart-empty-icon">🛒</div><div style="font-size:13px;color:var(--gray-400)">Panier vide</div></div>';updCart();return;}
+  d.innerHTML=cart.map(it=>`<div class="cart-item"><div class="ci-name">${it.nom}</div><div class="ci-qty"><button class="qty-btn" onclick="chQty(${it.id},-1)">−</button><span style="font-size:13px;font-weight:600;min-width:18px;text-align:center">${it.qte}</span><button class="qty-btn" onclick="chQty(${it.id},1)">+</button></div><div class="ci-total">${fmt(it.prix*it.qte)}</div><button class="btn-icon" onclick="rmCart(${it.id})" style="color:var(--red)">✕</button></div>`).join('');
+  updCart();
+}
+function chQty(id,d){const it=cart.find(x=>x.id===id);if(!it)return;it.qte=Math.max(1,Math.min(it.qte+d,it.max));renderCart();}
+function rmCart(id){cart=cart.filter(x=>x.id!==id);renderCart();}
+function clearCart(){cart=[];renderCart();}
+function updCart(){
+  const sub=cart.reduce((a,i)=>a+i.prix*i.qte,0);
+  const disc=parseInt((document.getElementById('cDisc')||{value:0}).value)||0;
+  const tot=Math.max(0,sub-disc);
+  const cs=document.getElementById('cSub');const ct=document.getElementById('cTotal');
+  if(cs)cs.textContent=fmt(sub);if(ct)ct.textContent=fmt(tot);
+}
+function selPay(t){
+  selPay_=t;
+  ['especes','mobile','credit'].forEach(x=>{const el=document.getElementById('po-'+x);if(el)el.classList.toggle('sel',x===t);});
+  const cr=document.getElementById('creditNameRow');if(cr)cr.style.display=t==='credit'?'block':'none';
+}
+function doVente(){
+  if(cart.length===0){toast('Panier vide !','error');return;}
+  if(selPay_==='credit'&&!document.getElementById('creditName').value.trim()){toast('Entrez le nom du client','error');return;}
+  const disc=parseInt(document.getElementById('cDisc').value)||0;
+  const sub=cart.reduce((a,i)=>a+i.prix*i.qte,0);
+  const tot=Math.max(0,sub-disc);
+  const now=new Date();
+  const dateStr=now.toISOString().slice(0,16).replace('T',' ');
+  const sale={id:Date.now(),date:dateStr,items:cart.map(i=>({nom:i.nom,qte:i.qte,prix:i.prix})),total:tot,pay:selPay_,caissier:currentUser?currentUser.nom:'Caissier',disc};
+  sales.unshift(sale);
+  cart.forEach(it=>{const p=prods.find(x=>x.id===it.id);if(p)p.qte-=it.qte;});
+  if(selPay_==='credit'){const cn=document.getElementById('creditName').value.trim();credits.push({id:Date.now(),client:cn,montant:tot,date:dateStr.slice(0,10),produits:cart.map(i=>i.nom).join(', ')});document.getElementById('creditName').value='';}
+  showReceipt(sale);cart=[];document.getElementById('cDisc').value=0;selPay('especes');renderCart();toast('Vente enregistrée ✓','success');renderAll();
+}
+function showReceipt(s){
+  const pl={especes:'Espèces',mobile:'Mobile Money',credit:'Crédit'};
+  document.getElementById('receiptContent').innerHTML=`<div class="receipt-head"><strong style="font-size:15px">🏪 ${document.getElementById('pShopName').value||'Boutique'}</strong><br><span style="font-size:11px;color:var(--gray-500)">${document.getElementById('pAddr').value||''}</span><br><span style="font-size:11px;color:var(--gray-500)">${s.date}</span></div>${s.items.map(i=>`<div class="receipt-row"><span>${i.nom} ×${i.qte}</span><span>${fmt(i.prix*i.qte)}</span></div>`).join('')}${s.disc>0?`<div class="receipt-row" style="color:var(--green)"><span>Remise</span><span>-${fmt(s.disc)}</span></div>`:''}<div class="receipt-row receipt-total"><span>TOTAL</span><span>${fmt(s.total)}</span></div><div class="receipt-row" style="margin-top:6px"><span>Paiement</span><span>${pl[s.pay]||s.pay}</span></div><div style="text-align:center;margin-top:14px;font-size:12px;color:var(--gray-400)">Merci pour votre achat !</div>`;
+  om('mReceipt');
+}
+
+function renderStock(){
+  const q=(document.getElementById('stockQ')||{value:''}).value.toLowerCase();
+  const cat=(document.getElementById('stockCat')||{value:''}).value;
+  const fil=(document.getElementById('stockFil')||{value:''}).value;
+  const list=prods.filter(p=>{
+    if(!p.nom.toLowerCase().includes(q))return false;
+    if(cat&&p.cat!==cat)return false;
+    if(fil==='low'&&p.qte>p.seuil)return false;
+    if(fil==='out'&&p.qte>0)return false;
+    return true;
+  });
+  const st=s=>s.qte===0?`<span class="badge badge-red">Épuisé</span>`:s.qte<=s.seuil?`<span class="badge badge-amber">Stock faible</span>`:`<span class="badge badge-green">En stock</span>`;
+  document.getElementById('stockTbl').innerHTML=list.map(p=>`<tr><td><strong>${p.emoji} ${p.nom}</strong><br><small style="color:var(--gray-400)">${p.fourn}</small></td><td>${p.cat}</td><td style="font-weight:700;color:var(--blue-700)">${fmt(p.vente)}</td><td><strong>${p.qte}</strong> ${p.unit}</td><td>${p.seuil}</td><td>${st(p)}</td><td style="white-space:nowrap"><button class="btn-icon" onclick="editProd(${p.id})" title="Modifier">✏️</button><button class="btn-icon" onclick="delProd(${p.id})" title="Supprimer" style="color:var(--red)">🗑️</button><button class="btn-icon" onclick="restock(${p.id})" title="Réappro">➕</button></td></tr>`).join('')||`<tr><td colspan="7"><div class="empty"><div class="empty-icon">📦</div><div class="empty-title">Aucun produit trouvé</div></div></td></tr>`;
+}
+function editProd(id){
+  const p=prods.find(x=>x.id===id);
+  document.getElementById('epid').value=p.id;
+  document.getElementById('pNom').value=p.nom;document.getElementById('pCat').value=p.cat;
+  document.getElementById('pUnit').value=p.unit;document.getElementById('pAchat').value=p.achat;
+  document.getElementById('pVente').value=p.vente;document.getElementById('pQte').value=p.qte;
+  document.getElementById('pSeuil').value=p.seuil;document.getElementById('pEmoji').value=p.emoji;
+  document.getElementById('pFourn').value=p.fourn;
+  document.getElementById('mProdTitle').textContent='Modifier le produit';
+  om('mProd');
+}
+function delProd(id){if(!confirm('Supprimer ce produit ?'))return;prods=prods.filter(p=>p.id!==id);toast('Produit supprimé','success');renderAll();}
+function saveProd(){
+  const id=document.getElementById('epid').value;
+  let ok=true;
+  const nom=document.getElementById('pNom').value.trim();if(!nom){fe('pNom','Nom obligatoire');ok=false;}else ce('pNom');
+  const achat=document.getElementById('pAchat').value.trim();if(!achat||!/^\d+$/.test(achat)){fe('pAchat','Chiffres uniquement (ex: 65000)');ok=false;}else ce('pAchat');
+  const vente=document.getElementById('pVente').value.trim();if(!vente||!/^\d+$/.test(vente)){fe('pVente','Chiffres uniquement (ex: 80000)');ok=false;}else ce('pVente');
+  const qte=document.getElementById('pQte').value.trim();if(qte===''||!/^\d+$/.test(qte)){fe('pQte','Nombre entier requis');ok=false;}else ce('pQte');
+  const seuil=document.getElementById('pSeuil').value.trim();if(!seuil||!/^\d+$/.test(seuil)){fe('pSeuil','Nombre entier requis');ok=false;}else ce('pSeuil');
+  if(!ok)return;
+  if(parseInt(vente)<parseInt(achat)){if(!confirm('Prix de vente inférieur au prix d\'achat — vous vendez à perte. Continuer ?'))return;}
+  const data={nom,cat:document.getElementById('pCat').value,unit:document.getElementById('pUnit').value,achat:parseInt(achat),vente:parseInt(vente),qte:parseInt(qte),seuil:parseInt(seuil),emoji:document.getElementById('pEmoji').value||'📦',fourn:document.getElementById('pFourn').value.trim()||'—'};
+  if(id){const i=prods.findIndex(p=>p.id===parseInt(id));prods[i]={...prods[i],...data};toast('Produit modifié ✓','success');}
+  else{data.id=Date.now();prods.push(data);toast('Produit ajouté ✓','success');}
+  cm('mProd');renderAll();
+}
+
+function renderSuppl(){const t=document.getElementById('supplTbl');if(!t)return;t.innerHTML=suppls.map(s=>`<tr><td><strong>${s.nom}</strong></td><td>${s.tel}</td><td>${s.produits}</td><td><span class="badge badge-blue">${s.delai}</span></td><td><button class="btn-icon" onclick="delSuppl(${s.id})" style="color:var(--red)">🗑️</button></td></tr>`).join('')||`<tr><td colspan="5"><div class="empty"><div class="empty-title">Aucun fournisseur</div></div></td></tr>`;}
+function saveSuppl(){
+  let ok=true;
+  const nom=document.getElementById('sNom').value.trim();if(!nom){fe('sNom','Nom obligatoire');ok=false;}else ce('sNom');
+  const tel=document.getElementById('sTel').value.trim();if(!tel){fe('sTel','Téléphone obligatoire');ok=false;}else if(!/^[+\d][\d\s]{6,14}$/.test(tel)){fe('sTel','Format invalide');ok=false;}else ce('sTel');
+  if(!ok)return;
+  suppls.push({id:Date.now(),nom,tel,produits:document.getElementById('sProd').value.trim()||'—',delai:document.getElementById('sDelai').value});
+  toast('Fournisseur ajouté ✓','success');cm('mSuppl');renderAll();
+}
+function delSuppl(id){if(!confirm('Supprimer ce fournisseur ?'))return;suppls=suppls.filter(s=>s.id!==id);renderAll();}
+
+function renderCredits(){
+  const tot=credits.reduce((a,c)=>a+c.montant,0);
+  const t1=document.getElementById('totalCred');const t2=document.getElementById('nbCred');
+  if(t1)t1.textContent=fmt(tot);if(t2)t2.textContent=credits.length;
+  const tb=document.getElementById('creditTbl');if(!tb)return;
+  tb.innerHTML=credits.map(c=>`<tr><td><strong>👤 ${c.client}</strong></td><td style="color:var(--red);font-weight:700">${fmt(c.montant)}</td><td>${c.date}</td><td style="color:var(--gray-500)">${c.produits}</td><td><button class="btn btn-primary btn-sm" onclick="openCredPay(${c.id})">💵 Payer</button> <button class="btn-icon" onclick="delCred(${c.id})" style="color:var(--red)">🗑️</button></td></tr>`).join('')||`<tr><td colspan="5"><div class="empty"><div class="empty-icon">✅</div><div class="empty-title">Aucun crédit impayé</div></div></td></tr>`;
+}
+function openCredPay(id){credPayId=id;const c=credits.find(x=>x.id===id);document.getElementById('credPayInfo').innerHTML=`<strong>${c.client}</strong> doit <span style="color:var(--red);font-weight:700">${fmt(c.montant)}</span>`;document.getElementById('credPayAmt').value=c.montant;om('mPayCred');}
+function doCredPay(){const amt=parseInt(document.getElementById('credPayAmt').value)||0;const c=credits.find(x=>x.id===credPayId);if(!c)return;if(amt>=c.montant){credits=credits.filter(x=>x.id!==credPayId);toast('Crédit soldé ✓','success');}else{c.montant-=amt;toast(`${fmt(amt)} enregistrés. Reste : ${fmt(c.montant)}`,'success');}cm('mPayCred');renderAll();}
+function delCred(id){if(!confirm('Supprimer ce crédit ?'))return;credits=credits.filter(c=>c.id!==id);renderAll();}
+
+function renderRap(){
+  const list=getSalesByPer(curPer);
+  const ca=list.reduce((a,s)=>a+s.total,0);const nb=list.length;
+  const r1=document.getElementById('rCA');const r2=document.getElementById('rNb');const r3=document.getElementById('rAvg');
+  if(r1)r1.textContent=fmt(ca);if(r2)r2.textContent=nb;if(r3)r3.textContent=fmt(nb>0?Math.round(ca/nb):0);
+  const ic={};list.forEach(s=>s.items.forEach(it=>{ic[it.nom]=(ic[it.nom]||0)+it.qte*it.prix;}));
+  const top=Object.entries(ic).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const mx=top[0]?.[1]||1;
+  const ch=document.getElementById('bestChart');
+  if(ch)ch.innerHTML=top.map(([n,v])=>`<div class="bar-row"><div class="bar-label">${n}</div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mx*100)}%"></div></div><div class="bar-val">${fmt(v)}</div></div>`).join('')||`<div class="empty"><div class="empty-title">Aucune vente sur cette période</div></div>`;
+}
+function getSalesByPer(p){const td='2025-01-15';if(p==='today')return sales.filter(s=>s.date.startsWith(td));if(p==='week')return sales.filter(s=>s.date>='2025-01-09');return sales;}
+function setPer(p,el){curPer=p;document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderRap();}
+
+function renderHist(){const t=document.getElementById('histTbl');if(!t)return;const pl={especes:'Espèces',mobile:'Mobile Money',credit:'Crédit'};t.innerHTML=sales.map(s=>`<tr><td style="white-space:nowrap">${s.date}</td><td>${s.items.map(i=>i.nom+' ×'+i.qte).join(', ')}</td><td style="font-weight:700;color:var(--blue-700)">${fmt(s.total)}</td><td><span class="badge ${s.pay==='credit'?'badge-red':s.pay==='mobile'?'badge-amber':'badge-green'}">${pl[s.pay]||s.pay}</span></td><td>${s.caissier}</td></tr>`).join('')||`<tr><td colspan="5"><div class="empty"><div class="empty-title">Aucune vente</div></div></td></tr>`;}
+
+function renderUsers(){
+  const t=document.getElementById('usersTbl');if(!t)return;
+  const isAdmin=currentUser&&currentUser.role==='Propriétaire';
+  const rc={'Propriétaire':'badge-blue','Gérant':'badge-amber','Caissier':'badge-green'};
+  t.innerHTML=users.map((u,i)=>`<tr>
+    <td><strong>👤 ${u.nom}</strong>${u.mustChange?'<br><span style="font-size:11px;color:var(--amber)">⚠️ Doit changer son PIN</span>':''}</td>
+    <td><span class="badge ${rc[u.role]||'badge-gray'}">${u.role}</span></td>
+    <td style="color:var(--gray-500);font-size:12px">${u.acces}</td>
+    <td><span class="badge ${u.actif?'badge-green':'badge-red'}">${u.actif?'Actif':'Inactif'}</span></td>
+    <td style="white-space:nowrap">${isAdmin&&u.role!=='Propriétaire'?`
+      <button class="btn btn-ghost btn-sm" onclick="openRecovery(${i})" title="Réinitialiser le PIN">🔑 Récup.</button>
+      <button class="btn-icon" onclick="toggleUser(${i})" title="${u.actif?'Désactiver':'Activer'}">${u.actif?'🔒':'🔓'}</button>
+      <button class="btn-icon" onclick="deleteUser(${i})" title="Supprimer le compte" style="color:var(--red)">🗑️</button>
+    `:'—'}</td>
+  </tr>`).join('');
+  const th=t.closest('table').querySelector('thead tr');
+  if(th&&th.children.length===4){th.innerHTML='<th>Nom</th><th>Rôle</th><th>Accès</th><th>Statut</th><th>Actions</th>';}
+}
+function toggleUser(idx){
+  if(!currentUser||currentUser.role!=='Propriétaire')return;
+  if(users[idx].role==='Propriétaire'){toast('Impossible de désactiver le compte propriétaire','error');return;}
+  const wasActive=users[idx].actif;
+  users[idx].actif=!wasActive;
+  if(wasActive){
+    toast(`Compte "${users[idx].nom}" désactivé — il ne peut plus se connecter`,'warn');
+  } else {
+    toast(`Compte "${users[idx].nom}" réactivé — il peut à nouveau se connecter`,'success');
+  }
+  renderAll();
+}
+function deleteUser(idx){
+  if(!currentUser||currentUser.role!=='Propriétaire'){toast('Accès refusé','error');return;}
+  if(users[idx].role==='Propriétaire'){toast('Impossible de supprimer le compte propriétaire','error');return;}
+  const nom=users[idx].nom;
+  if(!confirm(`Supprimer définitivement le compte de "${nom}" ?\n\nCette action est irréversible. Les ventes enregistrées par cet utilisateur restent dans l'historique.`))return;
+  users.splice(idx,1);
+  toast(`Compte "${nom}" supprimé ✓`,'success');
+  renderAll();
+}
+function saveUser(){
+  // Seul l'admin (Propriétaire) peut créer un compte
+  if(!currentUser||currentUser.role!=='Propriétaire'){toast('Seul le propriétaire peut créer des comptes','error');return;}
+  let ok=true;
+  const nom=document.getElementById('uNom').value.trim();if(!nom){fe('uNom','Nom obligatoire');ok=false;}else ce('uNom');
+  if(!ok)return;
+  const role=document.getElementById('uRole').value;
+  const acm={'Propriétaire':'Tout accès','Gérant':'Ventes, Stock, Rapports','Caissier':'Ventes uniquement'};
+  // PIN initial toujours 0000, l'utilisateur DOIT le changer à la première connexion
+  users.push({nom,role,pin:'0000',acces:acm[role],actif:true,mustChange:true});
+  toast(`Compte "${nom}" créé ✓ — PIN initial : 0000 (changement requis à la connexion)`,'success');
+  cm('mUser');renderAll();
+}
+
+// ── CHANGEMENT PIN OBLIGATOIRE ──
+let cpPin1='', cpPin2='';
+function openChangePIN(){
+  cpPin1='';cpPin2='';
+  document.getElementById('cpStep1').classList.add('on');
+  document.getElementById('cpStep2').classList.remove('on');
+  document.getElementById('cpErr').style.display='none';
+  updCpDots(1);updCpDots(2);
+  document.getElementById('mChangePIN').classList.add('open');
+}
+function cpKey(d,step){
+  if(step===1){
+    if(cpPin1.length>=4)return;
+    cpPin1+=d;updCpDots(1);
+    if(cpPin1.length===4)setTimeout(()=>{
+      document.getElementById('cpStep1').classList.remove('on');
+      document.getElementById('cpStep2').classList.add('on');
+    },300);
+  } else {
+    if(cpPin2.length>=4)return;
+    cpPin2+=d;updCpDots(2);
+    if(cpPin2.length===4)setTimeout(confirmNewPIN,200);
+  }
+}
+function cpDel(step){
+  if(step===1){cpPin1=cpPin1.slice(0,-1);updCpDots(1);}
+  else{cpPin2=cpPin2.slice(0,-1);updCpDots(2);document.getElementById('cpErr').style.display='none';}
+}
+function updCpDots(step){
+  const pin=step===1?cpPin1:cpPin2;
+  for(let i=0;i<4;i++){
+    const d=document.getElementById(`cpd${step}-${i}`);
+    if(d)d.classList.toggle('on',i<pin.length);
+  }
+}
+function confirmNewPIN(){
+  if(cpPin1!==cpPin2){
+    document.getElementById('cpErr').style.display='block';
+    cpPin2='';updCpDots(2);return;
+  }
+  if(cpPin1==='0000'){
+    document.getElementById('cpErr').style.display='block';
+    document.getElementById('cpErr').textContent='❌ Vous ne pouvez pas utiliser 0000 comme PIN personnel.';
+    cpPin1='';cpPin2='';
+    document.getElementById('cpStep2').classList.remove('on');
+    document.getElementById('cpStep1').classList.add('on');
+    updCpDots(1);updCpDots(2);return;
+  }
+  // Sauvegarder le nouveau PIN
+  const idx=users.findIndex(u=>u.nom===currentUser.nom);
+  if(idx>=0){users[idx].pin=cpPin1;users[idx].mustChange=false;currentUser=users[idx];}
+  document.getElementById('mChangePIN').classList.remove('open');
+  toast('Votre PIN personnel a été défini ✓','success');
+  connectUser();
+}
+
+// ── RÉCUPÉRATION COMPTE PAR ADMIN ──
+let recoveryUserId=null;
+function openRecovery(idx){
+  if(!currentUser||currentUser.role!=='Propriétaire'){toast('Seul le propriétaire peut récupérer un compte','error');return;}
+  recoveryUserId=idx;
+  document.getElementById('recoveryUserName').textContent=users[idx].nom+' ('+users[idx].role+')';
+  om('mRecovery');
+}
+function doRecovery(){
+  if(recoveryUserId===null)return;
+  users[recoveryUserId].pin='0000';
+  users[recoveryUserId].mustChange=true;
+  toast(`PIN de ${users[recoveryUserId].nom} réinitialisé à 0000 ✓ — Il devra le changer à la connexion`,'success');
+  cm('mRecovery');recoveryUserId=null;renderAll();
+}
+
+// ══════════════════════════════════
+// VALIDATION
+// ══════════════════════════════════
+function fe(id,msg){const el=document.getElementById(id);const er=document.getElementById('e-'+id);if(el)el.classList.add('err');if(er){er.textContent=msg;er.classList.add('v');}}
+function ce(id){const el=document.getElementById(id);const er=document.getElementById('e-'+id);if(el){el.classList.remove('err');el.classList.add('ok');}if(er)er.classList.remove('v');}
+function vMoney(id){const v=document.getElementById(id).value.trim();ce(id);if(v&&!/^\d+$/.test(v))fe(id,'Chiffres uniquement (ex: 65000)');}
+function vInt(id){const v=document.getElementById(id).value.trim();ce(id);if(v&&!/^\d+$/.test(v))fe(id,'Nombre entier requis');}
+function vPhone(id){const v=document.getElementById(id).value.trim();ce(id);if(v&&!/^[+\d][\d\s]{6,14}$/.test(v))fe(id,'Format invalide (ex: +224 620 00 00 00)');}
+function vPin(id){const v=document.getElementById(id).value.trim();ce(id);if(v&&!/^\d{4}$/.test(v))fe(id,'Exactement 4 chiffres');}
+
+// ══════════════════════════════════
+// UTILS
+// ══════════════════════════════════
+function fmt(n){return n.toLocaleString('fr-GN')+' GNF';}
+function om(id){document.getElementById(id).classList.add('open');}
+function cm(id){document.getElementById(id).classList.remove('open');}
+function toast(msg,type='info'){const d=document.createElement('div');d.className=`toast toast-${type}`;d.textContent=msg;document.getElementById('toasts').appendChild(d);setTimeout(()=>d.remove(),3200);}
+function toggleMobNav(){document.getElementById('mobileNav').classList.toggle('open');}
+function closeMobNav(){document.getElementById('mobileNav').classList.remove('open');}
+function setLang(l){lang=l;document.querySelectorAll('.lang-btn').forEach((b,i)=>b.classList.toggle('active',(i===0&&l==='fr')||(i===1&&l==='en')));document.querySelectorAll('[data-fr]').forEach(el=>{if(el.tagName==='INPUT'||el.tagName==='OPTION')return;el.textContent=el.getAttribute('data-'+l)||el.textContent;});}
+
+// Init date
+document.getElementById('pageSub').textContent=new Date().toLocaleDateString('fr-GN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('GestStock PWA enregistrée ✓', reg))
+      .catch(err => console.log('Service Worker erreur:', err));
+  });
+}
+</script>
+</body>
+</html>
